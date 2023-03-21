@@ -1,94 +1,224 @@
-@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-family: "Jost", sans-serif;
-}
-html{
-    scroll-behavior: smooth;
-}
-
-
-/* Image -Section */
-.image-section{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-/* Main - Section */
-
-.main-section{
-    /* border: 2px solid black; */
-    display: flex;
-    font-size: 1.3rem;
-}
-
-.loginform{
-    /* border: 2px solid green; */
-    width: 100%;
+.contain {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 100vh;
+    margin: 10px;
 }
-.form{
-    background-color: #f2f2f2;
-    border: 2px solid lightgray;
-    border-radius: 10px;
+
+.contain .card {
+    height: 550px;
     width: 70%;
+    background-color: #fff;
+    position: relative;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    font-family: 'Ubuntu', sans-serif;
+    border-radius: 10px
 }
 
-.upper-container{
-    text-align: center;
-    background-color: #72f01e86;
-    border: 1px solid #72f01e86;
-    border-radius: 5px;
+.contain .card .form {
+    width: 100%;
+    height: 100%;
+    display: flex
+}
+
+.contain .card .left-side {
+    width: 50%;
+    height: 100% !important;
+    border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
+    overflow: hidden
+}
+
+.left-side img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover
+}
+
+.contain .card .right-side {
+    width: 50%;
+    background-color: #efecf2;
+    height: 100%;
+    border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-
+    padding: 20px
 }
 
-.lower-container{
-    padding: 5px 20px 10px 20px;
-    text-align: left;
-}
-input[type="text"],
-input[type="email"],
-input[type="number"],
-input[type="password"],
-textarea , select{
-    width: 100%;
-    border: 1px solid #CCC;
-    border-radius: 6px;
-    margin-top: 5px;
-    padding: 8px;
-}
-input[type="submit"]{
-    background-color: #4caf84;
-    color: white;
-    padding: 10px 20px;
-    border: 2px solid #4caf84;
-    border-radius: 5px;
-    width: 100%;
-    margin-top: 25px;
-}
-input[type="submit"]:hover{
-    cursor: pointer;
-    background-color: #4cbd8c;
-    border: 2px solid #4cbd8c;
-    border-radius: 5px;
+.main {
+    display: none
 }
 
-.lower-container p{
-    margin-top: 10px;
+.active {
+    display: block
 }
 
-.lower-container p a{
+.register p {
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2a2739
+}
+
+.register p a {
     text-decoration: none;
+    color: blue;
+    margin-left: 3px
+}
+
+.hello {
+    margin-top: 40px;
+    text-align: center;
+    color: #2a2739;
+    
+}
+
+.hello h4 {
+    margin-top: 5px
+}
+
+.input_text {
+    position: relative;
+    margin-top: 20px
+}
+
+input[type="text"] {
+    height: 45px;
+    width: 100%;
+    border: none;
+    outline: 0;
+    padding: 0 10px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 1px solid #fff
+}
+
+input[type="password"] {
+    height: 45px;
+    width: 100%;
+    border: none;
+    outline: 0;
+    padding: 0 10px;
+    font-size: 18px;
+    border-radius: 10px;
+    padding-right: 33px;
+    border: 1px solid #fff
+}
+
+.input_text p {
+    margin-top: 4px;
+    font-size: 13px;
     margin-left: 10px;
-    font-weight: bold;
-    color: rgb(15, 126, 218);
+    color: red
+}
+
+.danger {
+    display: none
+}
+
+.input_text p i {
+    margin-right: 2px
+}
+
+.fa-eye-slash {
+    position: absolute;
+    top: 15px;
+    right: 8px;
+    cursor: pointer;
+    color: #727286
+}
+
+.fa-eye {
+    position: absolute;
+    top: 15px;
+    right: 8px;
+    cursor: pointer;
+    color: #727286
+}
+
+.recovery {
+    margin-top: 15px;
+    font-size: 13px;
+    text-align: end
+}
+
+.btn {
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.right-side hr {
+    margin-top: 30px;
+    color: #fff;
+    border: 0;
+    border-top: 1px solid #fff
+}
+
+.or {
+    display: flex;
+    justify-content: center;
+    font-size: 13px
+}
+
+.or p {
+    z-index: 2;
+    margin-top: -10px;
+    background-color: #efecf2;
+    padding: 0 4px
+}
+
+.boxes {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 30px
+}
+
+.boxes span {
+    height: 45px;
+    width: 60px;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: all 0.5s
+}
+
+.boxes span img {
+    width: 30px;
+    cursor: pointer;
+    transition: all 0.5s
+}
+
+.boxes span:hover img {
+    width: 35px
+}
+
+.boxes span:hover {
+    border: 4px solid #fff
+}
+
+.warning {
+    border: 1px solid red !important
+}
+
+@media (max-width:750px) {
+    .contain .card {
+        max-width: 350px
+    }
+
+    .contain .card .right-side {
+        border-radius: 10px;
+        width: 100%
+    }
+
+    .contain .card .left-side {
+        display: none
+    }
 }

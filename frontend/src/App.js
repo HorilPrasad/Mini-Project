@@ -3,11 +3,11 @@ import Home from "./Home";
 import About from "./About";
 import Service from "./Service";
 import Contact from "./Contact";
-import Login from "./Login";
+import Login from "./components/Login";
 import Signup from "./Signup";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/navbar";
-import Footer from "./components/footer";
+import Navbar from "./components/Navbar/Navbar"
+import Footer from "./components/Footer";
 import UserWorker from "./UserWorker";
 import UserCust from "./UserCust";
 import Admin from "./Admin";
@@ -29,7 +29,7 @@ const App = () => {
         <Route path = "/admin" element = {<Admin />} />
         <Route path = "/userreg" element = {<UserReg />} />
       </Routes>
-      <Footer />
+      <Footer/>
     </BrowserRouter>
   ); 
 };
