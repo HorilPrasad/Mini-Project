@@ -2,14 +2,16 @@ import React, {useState} from "react";
 import {MenuItems} from "./MenuItems"
 import "./Navbar.css"
 import { Button } from "../Button";
-const Navbar = (props) =>{
+import img from "../../image/way.png"
+import { Link } from "react-router-dom";
+const Navbar = () =>{
     const [state , setState] = useState({clicked:false})
     const handleClick = () =>{
         setState({clicked:!state.clicked})
     }
     return(
         <nav className="navbar">
-            <h1 className="navbar-logo">Easy Way<i className="fa-brands fa-slack"></i></h1>
+            <h1 className="navbar-logo">Easy<img src={img} className="logo"></img>Way</h1>
             <div className="menu-icon" onClick={handleClick}>
                  <i className={state.clicked?'fas fa-times':'fas fa-bars'}></i>
             </div>
@@ -23,7 +25,7 @@ const Navbar = (props) =>{
                         </li>
                     )
                 })}
-                <a href="/login"><Button buttonStyle="btn--outline">Login</Button></a>
+                <Link className="nav-btn" to="/login"><Button  buttonStyle="btn--outline">Login</Button></Link>
                 </ul>
             
         </nav>

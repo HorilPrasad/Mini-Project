@@ -12,11 +12,14 @@ import UserWorker from "./UserWorker";
 import UserCust from "./UserCust";
 import Admin from "./Admin";
 import UserReg from "./UserReg";
+import { AuthProvider } from "./components/Authentication/Auth";
 
 const App = () => {
   return(
-    <BrowserRouter>
+  <BrowserRouter>
+    
       <Navbar />
+      <AuthProvider>
       <Routes>
         <Route path = "/" element = {<Home />} />
         <Route path = "/about" element = {<About />} />
@@ -29,7 +32,9 @@ const App = () => {
         <Route path = "/admin" element = {<Admin />} />
         <Route path = "/userreg" element = {<UserReg />} />
       </Routes>
+      </AuthProvider>
       <Footer/>
+    
     </BrowserRouter>
   ); 
 };

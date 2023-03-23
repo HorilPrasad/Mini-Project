@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookie = require("cookie-parser");
 const dotenv = require("dotenv").config();
-
+const saltRounds = 10;
 //@desc Register a user
 //@route POST /api/users/register
 //@access public
@@ -24,9 +24,8 @@ const userRegistration = asyncHandler ( async (req, res) => {
         res.status(400);
         throw new Error("User already registered with this email!");
     }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    console.log("Hashed Password: ", hashedPassword);
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hashedPassword = await bcrypt.hash(password, salt);
     const user = await User.create( {
         username,
         email,
@@ -52,42 +51,42 @@ const userRegistration = asyncHandler ( async (req, res) => {
 const userLogin = asyncHandler ( async (req, res) => {
 
     const {email, password} = req.body;
-
+    
     if(!email || !password){
         res.status(400);
         throw new Error("All fields are mandatory!");
     }
+    try {
+        const user = await User.findOne({ email: email });
+       
+        if (user && (await bcrypt.compare(password,user.password)) ) {
+            const token = jwt.sign(
+                {_id:user._id, email },
+                process.env.SECRET_KEY,
+                {
+                    expiresIn: "2h"
+                }
+            ); 
+            res.cookie("access_token", token).status(200);
+            res.status(200).json(
+                user);
+            
+        } else {
+            
+            res.status(401).send("Invalid User");
+            
+        }
 
-    // comparing password
-    const user = await User.findOne({ email });
-
-    if(user && (await bcrypt.compare(password, user.password))){
-        const payload = {
-            id: user._id
-        };
-        
-        const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "2h"});
-        res.cookie('access_token', token, {
-            httpOnly: true
-        });
-
-        res.status(200).json({_id: user.id, username: user.username, email: user.email});
-
-        console.log(`${user} login successfull!`);
+    } catch (error) {
+        res.status(401).send(error)
     }
-    else{
-        res.status(401);
-        throw new Error("Invalid credentials! Email or password is not valid!");
-    }
-
-    // res.status(200).json({message : "user login successfull!"});
 });
 
 //@desc logout user
 //@route GET /api/users/logout
 //@access public
 
-const userLogout = asyncHandler ( async (re, res) =>{
+const userLogout = asyncHandler ( async (req, res) =>{
     res.clearCookie("access_token");
     res.status(200).json({ message: "Logout success!"});
 })
@@ -96,19 +95,10 @@ const userLogout = asyncHandler ( async (re, res) =>{
 //@route GET /api/users/profile
 //@access private
 
-const userProfile = asyncHandler ( async (req, res) => {
-   const token = req.cookies.access_token;
-   const userId = jwt.verify(token, process.env.SECRET_KEY);
-   if(user){
-
-       const userId = userId;
-       const user = await User.findOne({ userId });
-       res.status(200).json({_id: user._id, username: user.username, email: user.email});
-   }
+const userProfile = asyncHandler (async (req, res) => {
+    res.status(200).json({status:200});
+    
 });
-
-
-
 module.exports = {
     userRegistration,
     userLogin,
