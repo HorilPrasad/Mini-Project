@@ -6,7 +6,7 @@ const Footer = () => {
         <>
             <footer className="footer">
                 <br></br>
-                <p className="text-center">© 2022-2023 <strong>Easy Way</strong>, Inc. · Privacy · Terms & Condition</p>
+                <p className="text-center">© 2022-2023 <span>Easy Way</span>, Inc. · Privacy · Terms & Condition</p>
             </footer>
         </>
     );

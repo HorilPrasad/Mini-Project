@@ -10,10 +10,10 @@
 
 .contain .card {
     height: 550px;
-    width: 70%;
+    width: 80%;
     background-color: #fff;
     position: relative;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
     font-family: 'Ubuntu', sans-serif;
     border-radius: 10px
 }
@@ -85,28 +85,6 @@
     margin-top: 20px
 }
 
-input[type="text"] {
-    height: 45px;
-    width: 100%;
-    border: none;
-    outline: 0;
-    padding: 0 10px;
-    font-size: 18px;
-    border-radius: 10px;
-    border: 1px solid #fff
-}
-
-input[type="password"] {
-    height: 45px;
-    width: 100%;
-    border: none;
-    outline: 0;
-    padding: 0 10px;
-    font-size: 18px;
-    border-radius: 10px;
-    padding-right: 33px;
-    border: 1px solid #fff
-}
 
 .input_text p {
     margin-top: 4px;
@@ -145,11 +123,11 @@ input[type="password"] {
     text-align: end
 }
 
-.btn {
+/* .btn {
     width: 100%;
     margin-top: 15px;
     margin-bottom: 20px;
-}
+} */
 
 .right-side hr {
     margin-top: 30px;
@@ -208,9 +186,9 @@ input[type="password"] {
     border: 1px solid red !important
 }
 
-@media (max-width:750px) {
+@media (max-width:950px) {
     .contain .card {
-        max-width: 350px
+        width: 90%;
     }
 
     .contain .card .right-side {

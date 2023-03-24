@@ -1,7 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from "./Authentication/Auth";
 import { Button } from "./Button";
+import { Input } from "./Input";
 import "./Login.css"
 const Login = () => {
+
+ const [user, setUser] = useState(null);
+ const auth = useAuth();
+  const navigate = useNavigate();
   const [inputs, setinputs] = useState({
     email: "",
     password: ""
@@ -13,6 +20,7 @@ const Login = () => {
 
   const [eye, seteye] = useState(true);
   const [pass, setpass] = useState("password");
+
 
 
   const inputEvent = (event) => {
@@ -31,7 +39,7 @@ const Login = () => {
     });
   };
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
     setwarnemail(false);
     setwarnpass(false);
@@ -46,9 +54,31 @@ const Login = () => {
     { 
       setwarnpass(true); 
     }else 
-    { 
-      alert("Logged in Successfully"); 
+    {  
+      const {email,password} = inputs;
+      const res = await fetch("/api/users/login",{
+        method: "POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify({email,password})
+      });
+      const data = await res.json();
+      
+      console.log(data);
+    
+      if(res.status === 200)
+      {
+        setUser(data.email);
+        console.log(user);
+        auth.login(user);
+        navigate('/');
+      }
+      else
+        alert("error")
+      
     }
+    
   }; 
   const Eye = () => {
     if (pass === "password") {
@@ -79,18 +109,18 @@ const Login = () => {
               <form onSubmit={submitForm}>
 
                 <div className="input_text">
-                  <input className={` ${warnemail ? "warning" : ""}`} type="text" placeholder="Enter Email" name="email" value={inputs.email} onChange={inputEvent} />
+                  <Input className={` ${warnemail ? "warning" : ""}`} type="text" placeholder="Enter Email" name="email" value={inputs.email} onChange={inputEvent} />
                   <p className={` ${danger ? "danger" : ""}`}><i className="fa fa-warning"></i>Please enter a valid email address.</p>
                 </div>
                 <div className="input_text">
-                  <input className={` ${warnpass ? "warning" : ""}`} type={pass} placeholder="Enter Password" name="password" value={inputs.password} onChange={inputEvent} />
+                  <Input className={` ${warnpass ? "warning" : ""}`} type={pass} placeholder="Enter Password" name="password" value={inputs.password} onChange={inputEvent} />
                   <i onClick={Eye} className={`fa ${eye ? "fa-eye-slash" : "fa-eye"}`}></i>
                 </div>
                 <div className="recovery">
                   <p>Recovery Password</p>
                 </div>
                 <div>
-                  <Button >Sign in</Button>
+                  <Button buttonSize="btn--full">Sign in</Button>
                 </div>
 
               </form>

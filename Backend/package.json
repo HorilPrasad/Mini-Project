@@ -2,11 +2,18 @@
   "name": "miniproject",
   "version": "1.0.0",
   "description": "Mini Project",
+<<<<<<< HEAD
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
     "dev": "nodemon app.js"
+=======
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+>>>>>>> 33fea5a0de342571467f81434178bb3d640255a1
   },
   "author": "Abhinav Salar",
   "license": "ISC",
@@ -18,6 +25,7 @@
     "express-async-handler": "^1.2.0",
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.0.2"
+    "mongoose": "^7.0.2",
+    "nodemon": "^2.0.21"
   }
 }

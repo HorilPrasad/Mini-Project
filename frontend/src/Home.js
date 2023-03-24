@@ -1,102 +1,81 @@
-import React from "react";
-// import Navbar from "./components/navbar";
-// import "./components/navbar.css"
-import "./components/home.css"
-
+import React,{useEffect, useState} from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "./components/Authentication/Auth";
+import Card from "./components/Card";
+import { Divider } from "./components/Divider";
+import { ServiceList } from "./components/ServiceList";
+import './components/home.css';
+import { Button } from "./components/Button";
 const Home = () => {
+    const auth = useAuth();
     return (
         <>
-            <div className="main-sections">
-                <p>Welcome to</p>
-                <h1>Easy Way Home Page</h1>
-            </div>
-
-            {/* worker view */}
-            <div className="main-worker">
-                <h1>Our Features</h1>
-                <h2> We Provide different Types of Workers</h2>    
-                <div className="upper-view" >
-                    <div className="w1" id="w-card">
-                        <img src="labour.png" alt="" />
-                        <h2>Labour</h2>
-                    </div>
-                    <div className="w2" id="w-card">
-                        <img src="electrician.png" alt="" />
-                        <h2>Electrician</h2>
-                    </div>
-                    <div className="w3" id="w-card">
-                        <img src="plumber.png" alt="" />
-                        <h2>Plumber</h2>
-                    </div>
+            <section className="hero">
+                <div className="hero-left">
+                    <h1>We give services, you give love in return</h1>
+                    <p>We are a certified company. We Provide the best services like <strong>cleaning, electrician, carpainter, plumber</strong> etc. </p>
+                    <Button buttonSize="btn--large">Explore</Button>
                 </div>
-                <div className="lower-view" >
-                    <div className="w4" id="w-card">
-                        <img src="carpainter.png" alt="" />
-                        <h2>Carpainter</h2>
-                    </div>
-                    <div className="w5" id="w-card">
-                        <img src="cleaner.png" alt="" />
-                        <h2>Cleaner</h2>
-                    </div>
-                    <div className="w6" id="w-card">
-                        <img src="other.jpg" alt="" />
-                        <h2>Other</h2>
-                    </div>
+                <div className="hero-right">
+                    <img src="https://www.freepnglogos.com/uploads/workers-png/workers-how-build-loyal-construction-staff-steps-5.png" alt="heor image"/>
                 </div>
+            </section>
+            {/* Services */}
+            <div className="services-dividor">
+                <Divider>Services</Divider>
             </div>
-
+            <section className="services">
+            {ServiceList.map((item, index) => {
+                    return (
+                        <Card key={index} service={item.title} imageUrl = {item.imageUrl}></Card>
+                    )
+                })}
+            </section>
+            {/* <!-- About Us --> */}
+            <div className="about-divider">
+                <Divider>About Us</Divider>
+            </div>
+            <section className="about-us">
+                <div className="about-left">
+                    <div className="about-left-card1">
+                    <Card type= "card-only-image" imageUrl="https://c8.alamy.com/comp/2HX2KRK/cleaner-girl-working-2HX2KRK.jpg"></Card>
+                    </div>
+                    <div className="about-left-card">
+                    <Card type= "card-only-image" imageUrl="https://d340nzc93vsu6w.cloudfront.net/pubredesign/img/young-housewife-cleaning-with-rug-detergent-isolated.png"></Card>
             
-            {/* <!-- feature --> */}
-            {/* <div className="features-section">
-                <div className="features-text"><h2>Our Features</h2></div>
-                <div className="features-content">  
-                    <div className="row">
-                        <div className="col">
-                            <spam>We Provide the different Types of Worker</spam>
-                        </div>
-                    </div>    
-                    <div className="row">
-                        <div className="col">
-                            <spam> Electrician</spam>
-                        
-                        </div>
-                        <div className="col">
-                            <spam> Plumber</spam>
-                        
-                        </div>
-                        <div className="col">
-                            <spam> Technician</spam>
-                            
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col">
-                            <spam> Carpaineter</spam>
-                        </div>
-                        <div className="col">
-                            <spam> Labour</spam>
-                        </div>
-                        <div className="col">
-                            <spam> Others</spam>
-                        </div>
-                    </div>
-
+                      </div>
+                    
                 </div>
-            </div> */}
-        
-
-            {/* <!-- our mission --> */}
-            <div className="mission-section">
-                <br></br>
-                <br></br>
-                <div className="mission-text"><h2>Our Mission</h2></div>
-                <div className="mission-content">
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo est, dolores sit in earum hic placeat quidem et ipsam corrupti dolorem quis! Accusantium possimus voluptatibus quisquam magnam sequi autem non. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim blanditiis voluptatem provident earum voluptatum maiores quod? Quia accusamus, ratione architecto unde veritatis itaque corporis aliquid nihil odit similique quibusdam ipsa!</p>
-                    <br></br>
-                    <br></br>
+                <div className="about-right">
+                    <h1>Why will you Choose our services?</h1>
+                    <p className="about-tagline">Efficient, Friendly, Residential & Commercial Workers. Your Satisfaction is guaranteed</p>
+                    <ul>
+                        <li>
+                        <img src="https://static.vecteezy.com/system/resources/previews/010/160/867/non_2x/check-mark-icon-sign-design-free-png.png" alt="check" height="20px" width="20px"/>
+                        <p>Easy to get help</p></li>
+                        <li>
+                            <img src="https://static.vecteezy.com/system/resources/previews/010/160/867/non_2x/check-mark-icon-sign-design-free-png.png" alt="check" height="20px" width="20px"/>
+                            <p>Saves your time</p></li>
+                        <li>
+                        <img src="https://static.vecteezy.com/system/resources/previews/010/160/867/non_2x/check-mark-icon-sign-design-free-png.png" alt="check" height="20px" width="20px"/>
+                        <p>Seamless Communication</p>
+                        </li>
+                        <li>
+                        <img src="https://static.vecteezy.com/system/resources/previews/010/160/867/non_2x/check-mark-icon-sign-design-free-png.png" alt="check" height="20px" width="20px"/>
+                        <p>Provide professional workers</p>
+                        </li>
+                    </ul>
+                    <Button buttonSize="btn--large">View Details</Button>
                 </div>
+            </section>
+
+            <div className="review-divider">
+                <Divider>User reviews</Divider>
             </div>
+
+            <section>
+
+            </section>
         </>
     );
 };

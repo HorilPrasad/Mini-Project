@@ -25,9 +25,13 @@ const userRegistration = asyncHandler ( async (req, res) => {
         throw new Error("User already registered with this email!");
     }
     const salt = bcrypt.genSaltSync(saltRounds);
+<<<<<<< HEAD
 
     const hashedPassword = await bcrypt.hash(password, salt);
     console.log("Hashed Password: ", hashedPassword);
+=======
+    const hashedPassword = await bcrypt.hash(password, salt);
+>>>>>>> 33fea5a0de342571467f81434178bb3d640255a1
     const user = await User.create( {
         name,
         phone,
@@ -55,12 +59,33 @@ const userRegistration = asyncHandler ( async (req, res) => {
 const userLogin = asyncHandler ( async (req, res) => {
 
     const {email, password} = req.body;
-
+    
     if(!email || !password){
         res.status(400);
         throw new Error("All fields are mandatory!");
     }
+    try {
+        const user = await User.findOne({ email: email });
+       
+        if (user && (await bcrypt.compare(password,user.password)) ) {
+            const token = jwt.sign(
+                {_id:user._id, email },
+                process.env.SECRET_KEY,
+                {
+                    expiresIn: "2h"
+                }
+            ); 
+            res.cookie("access_token", token).status(200);
+            res.status(200).json(
+                user);
+            
+        } else {
+            
+            res.status(401).send("Invalid User");
+            
+        }
 
+<<<<<<< HEAD
     // comparing password
     const user = await User.findOne({ email });
 
@@ -77,19 +102,30 @@ const userLogin = asyncHandler ( async (req, res) => {
         res.status(200).json({_id: user.id, name: user.name, email: user.email});
 
         console.log(`${user} login successfull!`);
+=======
+    } catch (error) {
+        res.status(401).send(error)
+>>>>>>> 33fea5a0de342571467f81434178bb3d640255a1
     }
-    else{
-        res.status(401);
-        throw new Error("Invalid credentials! Email or password is not valid!");
-    }
-
-    // res.status(200).json({message : "user login successfull!"});
 });
 
+<<<<<<< HEAD
+=======
+//@desc logout user
+//@route GET /api/users/logout
+//@access public
+
+const userLogout = asyncHandler ( async (req, res) =>{
+    res.clearCookie("access_token");
+    res.status(200).json({ message: "Logout success!"});
+})
+
+>>>>>>> 33fea5a0de342571467f81434178bb3d640255a1
 //@desc user profile
 //@route GET /api/users/profile
 //@access private
 
+<<<<<<< HEAD
 const userProfile = asyncHandler ( async (req, res) => {
     const userData = req.user;
     // console.log(req.body);
@@ -184,6 +220,12 @@ const userLogout = asyncHandler ( async (re, res) =>{
 
 
 
+=======
+const userProfile = asyncHandler (async (req, res) => {
+    res.status(200).json({status:200});
+    
+});
+>>>>>>> 33fea5a0de342571467f81434178bb3d640255a1
 module.exports = {
     userRegistration,
     userLogin,
