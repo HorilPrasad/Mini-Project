@@ -1,19 +1,19 @@
 const asyncHandler = require("express-async-handler");
-const User = require("../models/userTestModel");
+const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookie = require("cookie-parser");
 const dotenv = require("dotenv").config();
-
+const saltRounds = 10;
 //@desc Register a user
 //@route POST /api/users/register
 //@access public
 
 const userRegistration = asyncHandler ( async (req, res) => {
 
-    const {username, email, password} = req.body;
+    const {name, phone, email, password, address} = req.body;
 
-    if(!username || !email || !password){
+    if(!name || !email || !password || !address){
         res.status(400);
         throw new Error("All fields are mandatory");
     }
@@ -24,19 +24,22 @@ const userRegistration = asyncHandler ( async (req, res) => {
         res.status(400);
         throw new Error("User already registered with this email!");
     }
+    const salt = bcrypt.genSaltSync(saltRounds);
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, salt);
     console.log("Hashed Password: ", hashedPassword);
     const user = await User.create( {
-        username,
+        name,
+        phone,
         email,
+        address,
         password : hashedPassword,
     });
 
     console.log(`${user}\nUser registered successfully!`);
 
     if(user){
-        res.status(201).json({_id: user.id, username: user.username, email: user.email, password: user.password});
+        res.status(201).json({_id: user.id, name: user.name, email: user.email, phone: user.phone, address: user.address});
     }
     else{
         res.status(400);
@@ -63,7 +66,7 @@ const userLogin = asyncHandler ( async (req, res) => {
 
     if(user && (await bcrypt.compare(password, user.password))){
         const payload = {
-            id: user._id
+            _id: user._id,email
         };
         
         const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "2h"});
@@ -71,7 +74,7 @@ const userLogin = asyncHandler ( async (req, res) => {
             httpOnly: true
         });
 
-        res.status(200).json({_id: user.id, username: user.username, email: user.email});
+        res.status(200).json({_id: user.id, name: user.name, email: user.email});
 
         console.log(`${user} login successfull!`);
     }
@@ -83,29 +86,101 @@ const userLogin = asyncHandler ( async (req, res) => {
     // res.status(200).json({message : "user login successfull!"});
 });
 
-//@desc logout user
-//@route GET /api/users/logout
-//@access public
-
-const userLogout = asyncHandler ( async (re, res) =>{
-    res.clearCookie("access_token");
-    res.status(200).json({ message: "Logout success!"});
-})
-
 //@desc user profile
 //@route GET /api/users/profile
 //@access private
 
 const userProfile = asyncHandler ( async (req, res) => {
-   const token = req.cookies.access_token;
-   const userId = jwt.verify(token, process.env.SECRET_KEY);
-   if(user){
-
-       const userId = userId;
-       const user = await User.findOne({ userId });
-       res.status(200).json({_id: user._id, username: user.username, email: user.email});
-   }
+    const userData = req.user;
+    // console.log(req.body);
+    console.log("User: ", userData._id);
+    const userId = userData._id;
+    const user = await User.findOne({ _id: userId});
+    console.log(user);
+    res.status(200).json(user);
 });
+
+//@desc update user
+//@route PUT api/user/editUser
+//@access private
+
+const editUser = asyncHandler ( async (req, res) => {
+    // console.log("editUser: ",  req.user);
+   const userId = req.user._id;
+   // finding the user 
+   const user = await User.findOne({_id: userId});
+    // console.log("user:" ,user);
+   if(!user){
+        res.status(404);
+        throw new Error("User does not exist!");
+   }
+
+   // updating data
+   const {name, phone, email, password, address} = req.body;
+
+   user.name = name || user.name;
+   user.email = email || user.email;
+   user.phone = phone || user.phone;
+   user.address = address || user.address;
+
+
+   const salt = bcrypt.genSaltSync(saltRounds);
+
+    const hashedPassword = await bcrypt.hash(password, salt);
+   user.password = password ? hashedPassword : user.password;
+
+   console.log("updated");
+   const updatedUser = await user.save();
+   console.log("saved!");
+
+   if(updatedUser){
+    console.log(updatedUser);
+       res.status(200).json(updatedUser);
+   }
+   else{
+    res.status(400);
+    throw new Error("Unable to update the user's data");
+   }
+
+});
+
+//@des get all users
+//@route /api/users/getAllUsers
+//@access private -admin
+
+const getAllUsers = asyncHandler ( async (req, res) => {
+    const allUsers = await User.find();
+    res.status(200).json(allUsers);
+});
+
+//@desc delete logged in user
+//@route delete /api/users/deleteUser
+//@aceess private 
+
+const deleteUser = asyncHandler ( async (req, res) => {
+    const user = req.user;
+    console.log("inside delete user:", user);
+    const userId = user._id;
+    const deletedUser = await User.findOneAndDelete({_id : userId});
+
+    if(!deletedUser){
+        res.status(400);
+        throw new Error("Unbale to delete the user account");
+    }
+
+    res.status(200).json([{message: "User deleted successfully!"}, deletedUser]);
+});
+
+//@desc logout user
+//@route GET /api/users/logout
+//@access public
+
+const userLogout = asyncHandler ( async (re, res) =>{
+    console.log("logout");
+    res.clearCookie("access_token");
+    res.status(200).json({ message: "Logout success!"});
+})
+
 
 
 
@@ -113,6 +188,9 @@ module.exports = {
     userRegistration,
     userLogin,
     userLogout,
-    userProfile
+    userProfile,
+    editUser, 
+    getAllUsers,
+    deleteUser
 }; 
 
