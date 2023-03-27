@@ -8,7 +8,6 @@ import './components/home.css';
 import { Button } from "./components/Button";
 import { ReviewCard } from "./components/ReviewCard";
 const Home = () => {
-    const auth = useAuth();
     return (
         <>
             <section className="hero">

@@ -6,7 +6,7 @@ import img from "../../image/way.png"
 import { Link } from "react-router-dom";
 const Navbar = () =>{
     const [state , setState] = useState({clicked:false})
-    const user = localStorage.getItem('name');
+    const user = localStorage.getItem('userId');
     const handleClick = () =>{
         setState({clicked:!state.clicked})
     }
