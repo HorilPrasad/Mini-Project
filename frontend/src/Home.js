@@ -6,6 +6,7 @@ import { Divider } from "./components/Divider";
 import { ServiceList } from "./components/ServiceList";
 import './components/home.css';
 import { Button } from "./components/Button";
+import { ReviewCard } from "./components/ReviewCard";
 const Home = () => {
     const auth = useAuth();
     return (
@@ -38,14 +39,13 @@ const Home = () => {
             <section className="about-us">
                 <div className="about-left">
                     <div className="about-left-card1">
-                    <Card type= "card-only-image" imageUrl="https://c8.alamy.com/comp/2HX2KRK/cleaner-girl-working-2HX2KRK.jpg"></Card>
+                        <Card type= "card-only-image" imageUrl="https://c8.alamy.com/comp/2HX2KRK/cleaner-girl-working-2HX2KRK.jpg"></Card>
                     </div>
                     <div className="about-left-card">
-                    <Card type= "card-only-image" imageUrl="https://d340nzc93vsu6w.cloudfront.net/pubredesign/img/young-housewife-cleaning-with-rug-detergent-isolated.png"></Card>
-            
-                      </div>
-                    
+                        <Card type= "card-only-image" imageUrl="https://d340nzc93vsu6w.cloudfront.net/pubredesign/img/young-housewife-cleaning-with-rug-detergent-isolated.png"></Card>
+                    </div>
                 </div>
+                
                 <div className="about-right">
                     <h1>Why will you Choose our services?</h1>
                     <p className="about-tagline">Efficient, Friendly, Residential & Commercial Workers. Your Satisfaction is guaranteed</p>
@@ -73,8 +73,15 @@ const Home = () => {
                 <Divider>User reviews</Divider>
             </div>
 
-            <section>
-
+            <section className="review">
+                <div className="review-card">
+                    
+                    <img className="review-user-img" src="https://www.hubspot.com/hubfs/how-to-create-user-accounts-and-profiles.jpeg" alt="review user image"></img>
+                    <p className="review-detail"></p>
+                    <h2 className="review-user-name">Horil Prasad</h2>
+                    
+                    
+                </div>
             </section>
         </>
     );
