@@ -1,12 +1,6 @@
 const express = require("express");
-<<<<<<< HEAD
 const authentication = require("../middleware/authentication");
 const cookieParser = require("cookie-parser");
-=======
-const userAuth = require("../middleware/userAuth");
-const cookieParser = require("cookie-parser")
-
->>>>>>> 33fea5a0de342571467f81434178bb3d640255a1
 const {
     userRegistration,
     userLogin,
@@ -21,7 +15,6 @@ const router = express.Router();
 router.use(cookieParser());
 router.route("/register").post(userRegistration);
 router.route("/login").post(userLogin);
-<<<<<<< HEAD
 router.route("/profile").get(authentication, userProfile);
 router.route("/editUser").put(authentication, editUser);
 router.route("/getAllUsers").get(getAllUsers);
@@ -33,9 +26,5 @@ router.route("/logout").post(userLogout);
 // delete users
 // user verification model
 // node mailer
-=======
-router.route("/logout", userLogout);
-router.get("/profile",userAuth, userProfile);
->>>>>>> 33fea5a0de342571467f81434178bb3d640255a1
 
 module.exports = router;
