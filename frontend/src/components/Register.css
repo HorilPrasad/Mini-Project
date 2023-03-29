@@ -1,0 +1,50 @@
+.register-box {
+    background-color: #e9f1f1;
+    padding: 2rem;
+}
+.register-form {
+    display: flex;
+    padding: 0rem 2rem;
+}
+.register-left {
+    width: 50%;
+    padding: 2rem;
+}
+.register-right {
+    width: 50%;
+    padding: 2rem;
+}
+.register-btn{
+    display: flex;
+    justify-content: end;
+    padding-right: 0.5rem;
+}
+.input_text{
+    padding: 0.5rem;
+}
+
+.input_text p{
+    color:#666464;
+    font-size: 1.2rem;
+}
+.input_text p span {
+    color:rgb(248, 113, 113);
+}
+
+@media screen and (max-width:950px) {
+    .register-form{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+    }
+    .register-left{
+        padding: 0;
+        width: 100%;
+    }
+    .register-right{
+        padding: 0;
+        width: 100%;
+    }
+    
+}

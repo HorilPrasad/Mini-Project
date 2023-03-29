@@ -1,5 +1,6 @@
 .navbar{
-    background: linear-gradient(90deg,rgb(174,15,254)0%,rgb(45, 21, 125)100%);
+    /* background: linear-gradient(90deg,rgb(174,15,254)0%,rgb(45, 21, 125)100%); */
+    background-color:rgb(207, 223, 255);
     height: 80px;
     display: flex;
     justify-content: center;
@@ -8,7 +9,7 @@
 }
 
 .navbar-logo{
-    color:#fff;
+    color:#5337b9;
     justify-content: start;
     margin-left: 20px;
     cursor: pointer;
@@ -29,10 +30,11 @@
 }
 
 .nav-links {
-    color:#fff;
+    color:#502db1;
     text-decoration: none;
     padding: 0.3rem 0.8rem;
     margin-right: 10px;
+    font-weight: 600;
 }
 
 .nav-links:hover {
@@ -44,6 +46,26 @@
 }
 .logo:hover {
     animation: App-logo-spin infinite 5s linear;
+}
+
+.nav-btn-login{
+  display: none;
+}
+
+.nav-profile-pic{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: #fff;
+  object-fit: cover;
+}
+.nav-profile-pic:hover{
+  cursor: pointer;
+}
+
+.nav-profile{
+  display: none;
+
 }
 @keyframes App-logo-spin {
     from {
@@ -65,6 +87,7 @@
   @media screen and (max-width: 960px) {
     .navbar {
       position: relative;
+      background: linear-gradient(90deg,rgb(174,15,254)0%,rgb(45, 21, 125)100%);;
     }
 
     .nav-menu{
@@ -102,6 +125,7 @@
       border-radius: 0;
     }
     .navbar-logo{
+      color: #fff;
       position: absolute;
       top: 0;
       left: 0;
@@ -142,6 +166,9 @@
     }
 
     .nav-btn {
+      display: none;
+    }
+    .nav-profile-pic{
       display: none;
     }
   }

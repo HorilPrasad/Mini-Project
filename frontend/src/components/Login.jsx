@@ -6,8 +6,9 @@ import { Input } from "./Input";
 import "./Login.css"
 const Login = () => {
 
- const [user, setUser] = useState(null);
+ const [user, setUser] = useState('');
  const auth = useAuth();
+
   const navigate = useNavigate();
   const [inputs, setinputs] = useState({
     email: "",
@@ -43,6 +44,12 @@ const Login = () => {
     e.preventDefault();
     setwarnemail(false);
     setwarnpass(false);
+
+    // setUser(inputs.email)
+    // auth.login(user);
+    // console.log(auth.user)
+    localStorage.clear();
+    localStorage.setItem('name',"horil");
     if (inputs.email.length < 1)
     { 
       setdanger(false); 
@@ -99,15 +106,12 @@ const Login = () => {
             </div>
 
             <div className="right-side">
-
-
               <div className="hello">
                 <h2>Hello Again!</h2>
                 <h4>Welcome back you have been missed! </h4>
               </div>
 
               <form onSubmit={submitForm}>
-
                 <div className="input_text">
                   <Input className={` ${warnemail ? "warning" : ""}`} type="text" placeholder="Enter Email" name="email" value={inputs.email} onChange={inputEvent} />
                   <p className={` ${danger ? "danger" : ""}`}><i className="fa fa-warning"></i>Please enter a valid email address.</p>

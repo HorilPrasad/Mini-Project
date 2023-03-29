@@ -13,6 +13,8 @@ import UserCust from "./UserCust";
 import Admin from "./Admin";
 import UserReg from "./UserReg";
 import { AuthProvider } from "./components/Authentication/Auth";
+import Register from "./components/Register";
+import { RequiredAuth } from "./components/Authentication/RequiredAuth";
 
 const App = () => {
   return(
@@ -21,12 +23,12 @@ const App = () => {
       <Navbar />
       <AuthProvider>
       <Routes>
-        <Route path = "/" element = {<Home />} />
+        <Route path = "/" element = {<RequiredAuth><Home /></RequiredAuth>} />
         <Route path = "/about" element = {<About />} />
         <Route path = "/service" element = {<Service />} />
         <Route path = "/contact" element = {<Contact />} />
         <Route path = "/login" element = {<Login />} />
-        <Route path = "/signup" element = {<Signup />} />
+        <Route path = "/signup" element = {<Register />} />
         <Route path = "/worker" element = {<UserWorker />} />
         <Route path = "/customer" element = {<UserCust />} />
         <Route path = "/admin" element = {<Admin />} />
