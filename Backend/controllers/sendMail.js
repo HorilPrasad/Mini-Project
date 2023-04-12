@@ -137,7 +137,7 @@ const nodemailer = require("nodemailer");
                    </tr>
                     <tr class="footer">
                         <td style=" background-color: rgb(217, 223, 228);">
-                            <div class="contactus"><span style="color: rgb(4, 55, 150);  font-weight: bold;">Get in touch</span><br><br>+911234567890<br>easyway@gmail.com</div>
+                            <div class="contactus"><span style="color: rgb(4, 55, 150);  font-weight: bold;">Get in touch</span><br><br>+911234567890<br>easywayservices04@gmail.com</div>
                             <div class="copywrite">Copyrights © Company All Rights Reserved</div>
                         </td>
                     </tr>
