@@ -4,6 +4,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookie = require("cookie-parser");
 const dotenv = require("dotenv").config();
+const sendMail = require("../controllers/sendMail");
+const otpGenerator = require('otp-generator');
+const optVerification = require("../models/otpVerification");
 const saltRounds = 10;
 //@desc Register a user
 //@route POST /api/users/register
@@ -62,54 +65,135 @@ const userRegistration = asyncHandler ( async (req, res) => {
 const userLogin = asyncHandler ( async (req, res) => {
 
     const {email, password} = req.body;
-    
+
     if(!email || !password){
         res.status(400);
         throw new Error("All fields are mandatory!");
     }
-    try {
-        const user = await User.findOne({ email: email });
-       
-        if (user && (await bcrypt.compare(password,user.password)) ) {
-            const token = jwt.sign(
-                {_id:user._id, email },
-                process.env.SECRET_KEY,
-                {
-                    expiresIn: "2h"
-                }
-            ); 
-            res.cookie("access_token", token).status(200);
-            res.status(200).json(
-                user);
-            
-        } else {
-            
-            res.status(401).send("Invalid User");
-            
-        }
 
-    } catch (error) {
-        res.status(401).send(error)
+    // comparing password
+    const user = await User.findOne({ email });
+
+    if(user && (await bcrypt.compare(password, user.password))){
+        const payload = {
+            _id: user._id,email
+        };
+        
+        const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "2h"});
+        res.cookie('access_token', token, {
+            httpOnly: true
+        });
+
+        res.status(200).json({_id: user.id, name: user.name, email: user.email});
+
+        console.log(`${user} login successfull!`);
     }
+    else{
+        res.status(401);
+        throw new Error("Invalid credentials! Email or password is not valid!");
+    }
+
+    // res.status(200).json({message : "user login successfull!"});
+});
+
+//@desc user profile
+//@route GET /api/users/profile
+//@access private
+
+const userProfile = asyncHandler ( async (req, res) => {
+    const userData = req.user;
+    // console.log(req.body);
+    console.log("User: ", userData._id);
+    const userId = userData._id;
+    const user = await User.findOne({ _id: userId});
+    console.log(user);
+    res.status(200).json(user);
+});
+
+//@desc update user
+//@route PUT api/user/editUser
+//@access private
+
+const editUser = asyncHandler ( async (req, res) => {
+    // console.log("editUser: ",  req.user);
+   const userId = req.user._id;
+   // finding the user 
+   const user = await User.findOne({_id: userId});
+    // console.log("user:" ,user);
+   if(!user){
+        res.status(404);
+        throw new Error("User does not exist!");
+   }
+
+   // updating data
+   const {name, phone, email, password, address} = req.body;
+
+   user.name = name || user.name;
+   user.email = email || user.email;
+   user.phone = phone || user.phone;
+   user.address = address || user.address;
+
+
+   const salt = bcrypt.genSaltSync(saltRounds);
+
+    const hashedPassword = await bcrypt.hash(password, salt);
+   user.password = password ? hashedPassword : user.password;
+
+   console.log("updated");
+   const updatedUser = await user.save();
+   console.log("saved!");
+
+   if(updatedUser){
+    console.log(updatedUser);
+       res.status(200).json(updatedUser);
+   }
+   else{
+    res.status(400);
+    throw new Error("Unable to update the user's data");
+   }
+
+});
+
+//@des get all users
+//@route /api/users/getAllUsers
+//@access private -admin
+
+const getAllUsers = asyncHandler ( async (req, res) => {
+    const allUsers = await User.find();
+    res.status(200).json(allUsers);
+});
+
+//@desc delete logged in user
+//@route delete /api/users/deleteUser
+//@aceess private 
+
+const deleteUser = asyncHandler ( async (req, res) => {
+    const user = req.user;
+    console.log("inside delete user:", user);
+    const userId = user._id;
+    const deletedUser = await User.findOneAndDelete({_id : userId});
+
+    if(!deletedUser){
+        res.status(400);
+        throw new Error("Unbale to delete the user account");
+    }
+
+    res.status(200).json([{message: "User deleted successfully!"}, deletedUser]);
 });
 
 //@desc logout user
 //@route GET /api/users/logout
 //@access public
 
-const userLogout = asyncHandler ( async (req, res) =>{
+const userLogout = asyncHandler ( async (re, res) =>{
+    console.log("logout");
     res.clearCookie("access_token");
     res.status(200).json({ message: "Logout success!"});
 })
 
-//@desc user profile
-//@route GET /api/users/profile
-//@access private
 
-const userProfile = asyncHandler (async (req, res) => {
-    res.status(200).json({status:200});
-    
-});
+
+
 module.exports = {
     userRegistration,
     userLogin,
