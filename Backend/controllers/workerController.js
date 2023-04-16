@@ -11,8 +11,9 @@ const saltRounds = 10;
 
 const workerRegistration = asyncHandler ( async (req, res) => {
 
-    const {name, phone, email, password, address, occupation, serviceList, description, imageURL} = req.body;
 
+    const {name, phone, email, password, address, occupation, about, imageUrl} = req.body.Inputs;
+    const serviceList = req.body.list;
     if(!name || !email || !password || !address){
         res.status(400);
         throw new Error("All fields are mandatory");
@@ -36,15 +37,16 @@ const workerRegistration = asyncHandler ( async (req, res) => {
         password : hashedPassword,
         occupation,
         serviceList,
-        description,
-        imageURL
+        description:about,
+        imageUrl
     });
 
-    console.log(`${worker}\n Worker registered successfully!`);
+    
 
     if(worker){
-        // res.status(201).json({_id: worker.id, name: worker.name, email: worker.email, phone: worker.phone, address: worker.address});
-        res.status(201).json([{message: "User added!"}, worker]);
+        res.status(201).json({_id: worker.id, name: worker.name, email: worker.email, phone: worker.phone, address: worker.address});
+        // res.status(201).json([{message: "User added!"}, worker]);
+        console.log(`${worker}\n Worker registered successfully!`);
     }
     else{
         res.status(400);

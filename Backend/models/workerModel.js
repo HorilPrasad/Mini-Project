@@ -18,20 +18,8 @@ const workerSchema = mongoose.Schema({
     },
 
     address : {
-        houseNumber: {
-            type: String
-        },
-        street: {
-            type: String
-        },
-        city: {
-            type: String,
-            required: [true, "Please add the city name"]
-        },
-        pincode:{
-            type : String,
-            required: [true, "Plaese add a pincode"]
-        },
+        type:String,
+        required: true
     },
     password: {
         type: String,
@@ -52,7 +40,7 @@ const workerSchema = mongoose.Schema({
         required: [true, "Please provide a description about services"]
     },
 
-    imageURL : {
+    imageUrl : {
         type : String
     }
 

@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const User = require("../models/userTestModel");
+const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookie = require("cookie-parser");
@@ -11,12 +11,14 @@ const saltRounds = 10;
 
 const userRegistration = asyncHandler ( async (req, res) => {
 
-    const {name, phone, email, password, address} = req.body;
+    const {name, phone, email, password, address} = req.body.Inputs;
+    const imageUrl = req.body.imageUrl;
+    console.log(req.body);
     if(!name || !email || !password || !address){
         res.status(400);
         throw new Error("All fields are mandatory");
     }
-    
+    console.log('hello')
     // const userAvailable  = await User.findOne({ email });
 
     // if(userAvailable){
@@ -27,15 +29,18 @@ const userRegistration = asyncHandler ( async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
     try {
         const user = await User.create( {
-            username:name,
+            name,
             email,
             password : hashedPassword,
+            phone,
+            address,
+            imageUrl
         });
 
         console.log(`${user}\nUser registered successfully!`);
 
         if(user){
-            res.status(201).json({_id: user.id, name: user.name, email: user.email, phone: user.phone, address: user.address});
+            res.status(201).json({_id: user.id, name: user.name, email: user.email, phone: user.phone, address: user.address,imageUrl:user.imageUrl});
         }
         else{
             res.status(400);

@@ -22,20 +22,8 @@ const userSchema = mongoose.Schema({
     },
 
     address :{
-        houseNumber: {
-            type: String
-        },
-        street: {
-            type: String
-        },
-        city: {
-            type: String,
-            required: [true, "Please add the city name"]
-        },
-        pincode:{
-            type : String,
-            required: [true, "Plaese add a pincode"]
-        },
+        type:String,
+        required:true
     },
 
     password: {
@@ -43,7 +31,7 @@ const userSchema = mongoose.Schema({
         required: [true, "Please add the user password!"],
     },
     
-    imageURL : {
+    imageUrl : {
         type : String
     }
 
