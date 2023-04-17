@@ -5,7 +5,7 @@ import { Input } from "../input/Input";
 import { Divider } from "../divider/Divider";
 import "../../css/register.css";
 import Select from 'react-select';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { storage } from "../../firebase/config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"

@@ -15,8 +15,13 @@
     overflow: hidden;
     margin: 20px auto;
 }
-
+@media screen and (max-width:650px) {
+    .container{
+        width: 90%;
+    }
+}
 .heading {
+    display: flex;
     font-size: 2rem;
     color: var(--primary);
     padding-bottom: 1rem;

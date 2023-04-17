@@ -82,7 +82,7 @@
 }
 
 .about-right h1{
-    font-size: 2.9rem;
+    font-size: 2.5rem;
     padding: 2rem 0rem;
     color:rgb(62, 37, 110);
 }
@@ -154,7 +154,25 @@
         z-index: 1;
     }
     .about-right{
-        width: 85%;
+        width: 100%;
+    }
+    .about-right h1{
+        font-size: 1.8rem;
+        padding: 1rem 0rem;
+    }
+    .about-right .about-tagline{
+        color: rgb(63, 26, 228);
+        font-size: 1rem;
+        font-weight: 600;
+    }
+    .hero-left{
+        padding: 1rem;
+    }
+    .hero-left h1{
+        font-size: 1.8rem;
+    }
+    .hero-left p{
+        font-size: 1.2rem;
     }
 }
 .review {
