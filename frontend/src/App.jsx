@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Feadback from "./components/feadback/Feadback"
 import WorkerProfile from "./components/worker_profile/WorkerProfile"
+import Services from "./components/services/Services"
 const App = () =>{
   return(
     <BrowserRouter>
@@ -18,6 +19,7 @@ const App = () =>{
         <Route path="/register" Component={Register}/>
         <Route path="/feadback" Component={Feadback}/>
         <Route path="/profile" Component={WorkerProfile}/>
+        <Route path="/services" Component={Services}/>
       </Routes>
       <Footer/>
       <ToastContainer/>

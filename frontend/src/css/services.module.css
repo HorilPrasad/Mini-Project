@@ -1,0 +1,22 @@
+.container{
+    min-height: 90vh;
+    background-color: rgb(230, 235, 235);
+}
+.search{
+    display: flex;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    max-height: 100px;
+    flex-wrap: wrap;
+}
+.heading{
+    margin-right: auto;
+    padding: 0.4rem;
+    color: var(--primary);
+}
+.top_workers{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
