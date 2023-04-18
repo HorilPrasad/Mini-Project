@@ -28,7 +28,7 @@ const nodemailer = require("nodemailer");
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Document</title>
+            <title>Email Verification Page</title>
             <style>
                  *{
                     box-sizing: border-box;
@@ -137,7 +137,7 @@ const nodemailer = require("nodemailer");
                    </tr>
                     <tr class="footer">
                         <td style=" background-color: rgb(217, 223, 228);">
-                            <div class="contactus"><span style="color: rgb(4, 55, 150);  font-weight: bold;">Get in touch</span><br><br>+911234567890<br>easywayservices04@gmail.com</div>
+                            <div class="contactus"><span style="color: rgb(4, 55, 150);  font-weight: bold;">Get in touch</span><br><br>+911234567890<br>esaywayservices04@gmail.com</div>
                             <div class="copywrite">Copyrights © Company All Rights Reserved</div>
                         </td>
                     </tr>
