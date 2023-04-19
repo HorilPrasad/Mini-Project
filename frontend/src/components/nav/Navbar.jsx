@@ -1,20 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { MenuItems } from "./MenuItems";
 import img from '../../img/way.png'
 import { Link } from "react-router-dom";
 import '../../css/navbar.css'
 import { Button } from "../button/Button";
 const Navbar = () =>{
-    const [state , setState] = useState({clicked:false})
-    const user =  JSON.parse(localStorage.getItem('user'));
-    let userImg = "https://static.vecteezy.com/system/resources/previews/002/002/257/original/beautiful-woman-avatar-character-icon-free-vector.jpg";
-    if(user != null && user.imageUrl != '')
-        userImg = user.imageUrl;
+    const [state , setState] = useState({clicked:false});
+    const [user,setUser] = useState(null);
+    const [userImg, setUserImg] = useState(null)
     
-    console.log(user)
-    useEffect(()=>{
+    const getUser = ()  => {
+        // const imgUrl = "https://static.vecteezy.com/system/resources/previews/002/002/257/original/beautiful-woman-avatar-character-icon-free-vector.jpg";
         
-    })
+        console.log(user)
+        if(user != null && user.imageUrl != '')
+            setUserImg(user.imageUrl);
+        // else
+        //     setUserImg(imgUrl)
+       
+    }
+
+    useLayoutEffect(()=>{
+        setUser(JSON.parse(localStorage.getItem('user')));
+         getUser();
+    },[])
 
     
     const handleClick = () =>{
