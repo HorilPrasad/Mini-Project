@@ -8,11 +8,9 @@ const cookieParser = require('cookie-parser');
 const sendMail = require('./controllers/sendMail');
 connectDb();
 const app = express();
+const cors = require('cors');
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 0b2b5b39aad9bea0dc2e7fdb1092058e4c8840bf
+app.use(cors());
 const PORT = process.env.PORT  || 5000;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());

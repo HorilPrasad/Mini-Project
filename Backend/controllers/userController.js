@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const User = require("../models/userTestModel");
+const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookie = require("cookie-parser");
@@ -14,34 +14,16 @@ const saltRounds = 10;
 
 const userRegistration = asyncHandler ( async (req, res) => {
 
-    const {name, phone, email, password, address} = req.body;
+    const {name, phone, email, password, address} = req.body.Inputs;
+    const imageUrl = req.body.imageUrl;
+    console.log(req.body);
     if(!name || !email || !password || !address){
         res.status(400);
         throw new Error("All fields are mandatory");
     }
-    
+    console.log('hello')
     // const userAvailable  = await User.findOne({ email });
 
-<<<<<<< HEAD
-    const userAvailable  = await User.findOne({ email });
-
-    if(userAvailable){
-        res.status(400);
-        throw new Error("User already registered with this email!");
-    }
-
-    const salt = bcrypt.genSaltSync(saltRounds);
-
-    const hashedPassword = await bcrypt.hash(password, salt);
-    console.log("Hashed Password: ", hashedPassword);
-    const user = await User.create( {
-        name,
-        phone, 
-        email,
-        address,
-        password : hashedPassword,
-    });
-=======
     // if(userAvailable){
     //     res.status(400);
     //     throw new Error("User already registered with this email!");
@@ -50,16 +32,18 @@ const userRegistration = asyncHandler ( async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
     try {
         const user = await User.create( {
-            username:name,
+            name,
             email,
             password : hashedPassword,
+            phone,
+            address,
+            imageUrl
         });
->>>>>>> 0b2b5b39aad9bea0dc2e7fdb1092058e4c8840bf
 
         console.log(`${user}\nUser registered successfully!`);
 
         if(user){
-            res.status(201).json({_id: user.id, name: user.name, email: user.email, phone: user.phone, address: user.address});
+            res.status(201).json({_id: user.id, name: user.name, email: user.email, phone: user.phone, address: user.address,imageUrl:user.imageUrl});
         }
         else{
             res.status(400);
@@ -87,7 +71,6 @@ const userLogin = asyncHandler ( async (req, res) => {
         throw new Error("All fields are mandatory!");
     }
 
-<<<<<<< HEAD
     // comparing password
     const user = await User.findOne({ email });
 
@@ -104,10 +87,6 @@ const userLogin = asyncHandler ( async (req, res) => {
         res.status(200).json({_id: user.id, name: user.name, email: user.email});
 
         console.log(`${user} login successfull!`);
-=======
-    } catch (error) {
-        res.status(401).send(error)
->>>>>>> 0b2b5b39aad9bea0dc2e7fdb1092058e4c8840bf
     }
     else{
         res.status(401);
@@ -117,23 +96,10 @@ const userLogin = asyncHandler ( async (req, res) => {
     // res.status(200).json({message : "user login successfull!"});
 });
 
-<<<<<<< HEAD
-=======
-//@desc logout user
-//@route GET /api/users/logout
-//@access public
-
-const userLogout = asyncHandler ( async (req, res) =>{
-    res.clearCookie("access_token");
-    res.status(200).json({ message: "Logout success!"});
-})
-
->>>>>>> 0b2b5b39aad9bea0dc2e7fdb1092058e4c8840bf
 //@desc user profile
 //@route GET /api/users/profile
 //@access private
 
-<<<<<<< HEAD
 const userProfile = asyncHandler ( async (req, res) => {
     const userData = req.user;
     // console.log(req.body);
@@ -228,12 +194,6 @@ const userLogout = asyncHandler ( async (re, res) =>{
 
 
 
-=======
-const userProfile = asyncHandler (async (req, res) => {
-    res.status(200).json({status:200});
-    
-});
->>>>>>> 0b2b5b39aad9bea0dc2e7fdb1092058e4c8840bf
 module.exports = {
     userRegistration,
     userLogin,
