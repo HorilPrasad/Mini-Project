@@ -14,47 +14,41 @@ const saltRounds = 10;
 
 const userRegistration = asyncHandler ( async (req, res) => {
 
-    const {name, phone, email, password, address} = req.body.Inputs;
-    const imageUrl = req.body.imageUrl;
-    console.log(req.body);
+    const {name, phone, email, password, address} = req.body;
+
     if(!name || !email || !password || !address){
         res.status(400);
         throw new Error("All fields are mandatory");
     }
-    console.log('hello')
-    // const userAvailable  = await User.findOne({ email });
 
-    // if(userAvailable){
-    //     res.status(400);
-    //     throw new Error("User already registered with this email!");
-    // }
-    const salt = bcrypt.genSaltSync(saltRounds);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    try {
-        const user = await User.create( {
-            name,
-            email,
-            password : hashedPassword,
-            phone,
-            address,
-            imageUrl
-        });
+    const userAvailable  = await User.findOne({ email });
 
-        console.log(`${user}\nUser registered successfully!`);
-
-        if(user){
-            res.status(201).json({_id: user.id, name: user.name, email: user.email, phone: user.phone, address: user.address,imageUrl:user.imageUrl});
-        }
-        else{
-            res.status(400);
-            throw new Error("User data is not valid!");
-        }
-    } catch (error) {
-        res.status(400).send(error);
-
+    if(userAvailable){
+        res.status(400);
+        throw new Error("User already registered with this email!");
     }
 
-    
+    const salt = bcrypt.genSaltSync(saltRounds);
+
+    const hashedPassword = await bcrypt.hash(password, salt);
+    console.log("Hashed Password: ", hashedPassword);
+    const user = await User.create( {
+        name,
+        phone, 
+        email,
+        address,
+        password : hashedPassword,
+    });
+
+    console.log(`${user}\nUser registered successfully!`);
+
+    if(user){
+        res.status(201).json({_id: user.id, name: user.name, email: user.email, phone: user.phone, address: user.address});
+    }
+    else{
+        res.status(400);
+        throw new Error("User data is not valid!");
+    }
     // res.status(200).json({message : "user registered!"});
 });
 
@@ -185,13 +179,11 @@ const deleteUser = asyncHandler ( async (req, res) => {
 //@route GET /api/users/logout
 //@access public
 
-const userLogout = asyncHandler ( async (re, res) =>{
+const userLogout = asyncHandler ( async (req, res) =>{
     console.log("logout");
     res.clearCookie("access_token");
     res.status(200).json({ message: "Logout success!"});
-})
-
-
+});
 
 
 module.exports = {
@@ -199,5 +191,8 @@ module.exports = {
     userLogin,
     userLogout,
     userProfile,
+    editUser, 
+    getAllUsers,
+    deleteUser
 }; 
 
