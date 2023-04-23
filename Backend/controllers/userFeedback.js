@@ -24,7 +24,7 @@ const userFeedback_controller = asyncHandler ( async (req, res) => {
     console.log(`${feedback} \n Feedback recorded successfully!`);
 
     if(feedback){
-        res.status(201).json({user_name : feedback.name, user_email : feedback.email, rating : feedback.rating, message : feedback.user_message});
+        res.status(200).json(feedback);
     }
     else{
         res.status(400);
@@ -32,4 +32,11 @@ const userFeedback_controller = asyncHandler ( async (req, res) => {
     }
 });
 
-module.exports = userFeedback_controller;
+const userFeadback_featch = asyncHandler ( async (req, res) => {
+    const feadback = await userFeedback.find();
+
+    if(feadback)
+        res.status(200).json(feadback);
+})
+
+module.exports = {userFeedback_controller , userFeadback_featch};

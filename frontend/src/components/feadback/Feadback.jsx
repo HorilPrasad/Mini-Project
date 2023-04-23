@@ -18,12 +18,27 @@ const Feadback = () => {
           });
     }
 
-    const SubmitForm = (event) => {
+    const SubmitForm = async (event) => {
         event.preventDefault();
         console.log(inputs);
 
         if(inputs.name ==='' || inputs.email === '' || inputs.message === '' || inputs.rating ==='')
             toast.error("All field mindatory!",{theme:'colored'})
+        else
+        {
+            const res = await fetch('http://localhost:5000/api/feedback',{
+                method:'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify(inputs)
+            })
+
+            if(res.status === 200)
+                toast.success('Feadback send!',{theme:'colored'})
+            else
+             toast.error('Already given a feadback')
+        }
 
     }
     return (

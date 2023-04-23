@@ -4,31 +4,25 @@ import img from '../../img/way.png'
 import { Link } from "react-router-dom";
 import '../../css/navbar.css'
 import { Button } from "../button/Button";
+import { useUser } from "../shared/userContext";
 const Navbar = () =>{
     const [state , setState] = useState({clicked:false});
-    const [user,setUser] = useState(null);
-    const [userImg, setUserImg] = useState(null)
+    const {user , updateUser,loginStatus,login} = useUser();
+    const currentUser = localStorage.getItem('user');
     
-    const getUser = ()  => {
-        // const imgUrl = "https://static.vecteezy.com/system/resources/previews/002/002/257/original/beautiful-woman-avatar-character-icon-free-vector.jpg";
-        
-        console.log(user)
-        if(user != null && user.imageUrl != '')
-            setUserImg(user.imageUrl);
-        // else
-        //     setUserImg(imgUrl)
-       
-    }
+    useEffect(() =>{
+        if(currentUser)
+        {    
+            updateUser(JSON.parse(currentUser));
+            login()
+        }
+    },[loginStatus])
 
-    useLayoutEffect(()=>{
-        setUser(JSON.parse(localStorage.getItem('user')));
-         getUser();
-    },[])
-
-    
+   
     const handleClick = () =>{
         setState({clicked:!state.clicked})
     }
+    
     return(
         <nav className="navbar">
             <h1 className="navbar-logo">Easy<img src={img} className="logo"></img>Way</h1>
@@ -39,14 +33,23 @@ const Navbar = () =>{
                 {MenuItems.map((item, index) => {
                     return (
                         <li key={index}>
-                            <a className={item.cName} href={item.url}>
+                            <Link className={item.cName} to={item.url}>
                                 {item.title}
-                            </a>
+                            </Link>
                         </li>
                     )
                 })}
-                <li><Link className={user?'nav-btn-login':'nav-btn'} to="/login"><Button >Login</Button></Link></li>
-                <li><img className={user?'nav-profile-pic':'nav-profile'} src={userImg} alt="pic"/></li>
+                {
+                    loginStatus ? <li><Link className="nav-links-mobile" to='/profile'>{user.name}</Link></li>
+                    :<li><Link className="nav-links-mobile" to='/login'>login</Link></li>
+                }
+                {
+                    loginStatus ?<li><img className='nav-profile-pic' src={user.imageUrl} alt="pic"/></li> 
+                    :<li><Link className='nav-btn' to="/login"><Button >Login</Button></Link></li>
+                    
+                }
+                
+                
                 </ul>
             
         </nav>

@@ -1,10 +1,10 @@
 .container{
     display: flex;
     background-color: #fff;
-    width: 320px;
+    width: 300px;
     height: 180px;
     box-shadow: 1px 1px 5px rgb(168, 166, 166);
-    border-radius: 1rem;
+    border-radius: 6px;
 }
 .container:hover{
     cursor: pointer;

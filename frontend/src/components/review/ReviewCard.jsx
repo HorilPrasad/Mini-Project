@@ -3,7 +3,7 @@ import quote_up from '../../img/quote-up.png';
 import quote_down from '../../img/quote-down.png';
 import profileImg from '../../img/avatar.svg';
 
-const ReviewCard = ()=>{
+const ReviewCard = ({data})=>{
     return (
         <div className={style.card}>
         <div className={style.quote_up}>
@@ -11,10 +11,10 @@ const ReviewCard = ()=>{
         </div>
         <div className={style.user_img}>
             <img src={profileImg} alt="" width="50"/>
-            <h2 className={style.name}>John Dey</h2>
+            <h2 className={style.name}>{data.name}</h2>
         </div>
-        <div className={style.text}>Eum temporibus sit quos ad culpa, ullam, suscipit debitis autem, cum assumenda provident!"</div>
-        <div className={style.quote_down}>
+        <div className={style.text}>
+        <div className={style.quote_down}>{data.user_message}</div>
             <img src={quote_down} alt="" width="30"/>
         </div>
         

@@ -11,7 +11,6 @@ const otpRecord = require('../models/otpVerification');
 const sendMail = async (req, res) => {
     const {email} = req.body;
    try{
-    let testAccount = await nodemailer.createTestAccount();
     // connect with the smtp
     let transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -173,15 +172,18 @@ const sendMail = async (req, res) => {
         });
 
         // console.log("below otpRecord", otp_record);
-        if(!otp_record){
+        if(otp_record){
+            res.status(200).json(info);
+        }else{
             console.log("Unable to create otpRecord");
             res.status(400).json({message: "unable to create record"});
         }
-        res.status(200).json(info);
+        
     }
    }
    catch(error){
     // res.status(400).json({message: error.message});
+    console.log(error)
     res.status(400).json([{error: error}, {message: error.message}]);
    }  
 };
@@ -197,13 +199,12 @@ const verifyOtp = async (req, res) => {
     try{
         const {email, otp} = req.body;
         // getting otp record
+        console.log(`${otp} ${email}`);
        const user = await otpRecord.findOne({ email });
-        console.log(user.email);
 
         //verifying the otp
        if(user && (await bcrypt.compare(otp, user.otp))){
            console.log("user verified!");
-
            //deleting the otp record
            const deleteRecord = await otpRecord.findOneAndDelete({ email });
            if(!deleteRecord){
@@ -212,6 +213,7 @@ const verifyOtp = async (req, res) => {
            res.status(200).json({email: user.email});
        }
        else{
+        console.log("problem")
         res.status(403).json({message: "Invalid otp"});
        }
     }

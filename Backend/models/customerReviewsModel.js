@@ -8,8 +8,7 @@ const customerReviewModel = mongoose.Schema({
 
     email:{
         type: String,
-        required : [true, "Please add user email"],
-        unique : [true, "email id already user"],
+        required : [true, "Please add user email"]
     },
 
     rating :{

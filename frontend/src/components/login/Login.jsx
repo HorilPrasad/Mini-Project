@@ -1,12 +1,14 @@
 import  { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from "../button/Button";
 import { Input } from "../input/Input";
 import "../../css/login.css"
 import singImg from "../../img/sign-up-form.png";
+import {useUser} from '../shared/userContext';
+import {toast} from 'react-toastify';
 const Login = () => {
 
- const [user, setUser] = useState('');
+  const {login ,updateUser} = useUser();
 
   const navigate = useNavigate();
   const [inputs, setinputs] = useState({
@@ -44,44 +46,42 @@ const Login = () => {
     setwarnemail(false);
     setwarnpass(false);
 
-    // setUser(inputs.email)
-    // auth.login(user);
-    // console.log(auth.user)
-    localStorage.clear();
-    localStorage.setItem('name',"horil");
     if (inputs.email.length < 1)
     { 
       setdanger(false); 
+      toast.warn("Enter valid email!")
     } 
     if (inputs.email === "") 
     { 
       setwarnemail(true); 
+      toast.warn("Enter valid email!")
     }else if (inputs.password === "") 
     { 
       setwarnpass(true); 
     }else 
     {  
       const {email,password} = inputs;
-      const res = await fetch("/api/users/login",{
+      const res = await fetch("http://localhost:5000/api/users/login",{
         method: "POST",
         headers:{
           "Content-Type":"application/json"
         },
         body: JSON.stringify({email,password})
       });
-      const data = await res.json();
       
-      console.log(data);
-    
       if(res.status === 200)
       {
-        setUser(data.email);
-        console.log(user);
-        auth.login(user);
-        navigate('/');
+        const data = await res.json();
+        toast.success('Login Successfully!', { theme: 'colored' })
+        localStorage.clear();
+        login()
+        const currentUser = {id:data._id,name:data.name,email:data.email,imageUrl:data.imageUrl}
+        localStorage.setItem('user', JSON.stringify(currentUser));
+        updateUser(currentUser);
+        navigate('/')
       }
       else
-        alert("error")
+        toast.error("Invalid user!",{theme:'colored'})
       
     }
     
@@ -128,7 +128,7 @@ const Login = () => {
 
               </form>
               <div className="register">
-                <p>Not a member? <a href="/register">Register Now</a></p>
+                <p>Not a member? <Link to="/register">Register Now</Link></p>
               </div>
 
               <hr />

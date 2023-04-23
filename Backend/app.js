@@ -6,9 +6,12 @@ const connectDb = require('./config/dbConnection');
 const jwt = require("jsonwebtoken");
 const cookieParser = require('cookie-parser');
 const sendMail = require('./controllers/sendMail');
+const cors = require('cors');
+
+
 connectDb();
 const app = express();
-
+app.use(cors());
 const PORT = process.env.PORT  || 5000;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());

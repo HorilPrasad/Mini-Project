@@ -14,7 +14,7 @@ const saltRounds = 10;
 
 const userRegistration = asyncHandler ( async (req, res) => {
 
-    const {name, phone, email, password, address} = req.body;
+    const {name, phone, email, password, address, imageUrl} = req.body;
 
     if(!name || !email || !password || !address){
         res.status(400);
@@ -38,12 +38,13 @@ const userRegistration = asyncHandler ( async (req, res) => {
         email,
         address,
         password : hashedPassword,
+        imageUrl
     });
 
     console.log(`${user}\nUser registered successfully!`);
 
     if(user){
-        res.status(201).json({_id: user.id, name: user.name, email: user.email, phone: user.phone, address: user.address});
+        res.status(201).json({_id:user._id, name: user.name, email: user.email,imageUrl:user.imageUrl});
     }
     else{
         res.status(400);
@@ -59,7 +60,7 @@ const userRegistration = asyncHandler ( async (req, res) => {
 const userLogin = asyncHandler ( async (req, res) => {
 
     const {email, password} = req.body;
-
+    console.log(email)
     if(!email || !password){
         res.status(400);
         throw new Error("All fields are mandatory!");
@@ -78,8 +79,8 @@ const userLogin = asyncHandler ( async (req, res) => {
             httpOnly: true
         });
 
-        res.status(200).json({_id: user.id, name: user.name, email: user.email});
-
+        
+        res.status(200).json({_id:user._id, name: user.name, email: user.email,imageUrl:user.imageUrl});
         console.log(`${user} login successfull!`);
     }
     else{

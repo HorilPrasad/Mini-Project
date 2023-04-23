@@ -9,17 +9,20 @@ import 'react-toastify/dist/ReactToastify.css';
 import Feadback from "./components/feadback/Feadback"
 import WorkerProfile from "./components/worker_profile/WorkerProfile"
 import Services from "./components/services/Services"
+import ContactUs from "./components/contact/ContactUs"
+import { UserProvider } from "./components/shared/userContext"
 const App = () =>{
   return(
     <BrowserRouter>
       <Navbar/>
       <Routes>
         <Route path="/" element={<Home/>}/>
-        <Route path="/login" Component={Login}/>
-        <Route path="/register" Component={Register}/>
-        <Route path="/feadback" Component={Feadback}/>
-        <Route path="/profile" Component={WorkerProfile}/>
-        <Route path="/services" Component={Services}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
+        <Route path="/feadback" element={<Feadback/>}/>
+        <Route path="/profile" element={<WorkerProfile/>}/>
+        <Route path="/workers" element={<Services/>}/>
+        <Route path="/contact" element={<ContactUs/>}/>
       </Routes>
       <Footer/>
       <ToastContainer/>

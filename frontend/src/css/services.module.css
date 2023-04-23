@@ -1,13 +1,14 @@
 .container{
     min-height: 90vh;
-    background-color: rgb(230, 235, 235);
+    background-color: rgb(241, 241, 241);
 }
 .search{
     display: flex;
     justify-content: flex-end;
     padding: 1.5rem;
-    max-height: 100px;
     flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
 }
 .heading{
     margin-right: auto;
@@ -19,4 +20,14 @@
     flex-wrap: wrap;
     gap: 1rem;
     justify-content: center;
+    padding-bottom: 1rem;
 }
+.top_more
+{
+    padding: 1rem;
+}
+.search_box{
+    position: relative;
+    max-height: 50px;
+}
+
