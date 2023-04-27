@@ -18,7 +18,7 @@ const Profile = () => {
     <div className={style.container}>
         <div className={style.left}>
             <div className={style.profile_img}>
-                <img src="https://images.pexels.com/photos/1485031/pexels-photo-1485031.jpeg?cs=srgb&dl=pexels-harsh-raj-gond-1485031.jpg&fm=jpg" alt='user pic'/>
+                <img src="https://ise-erp.com/wp-content/uploads/2019/05/Hardhat-profile-with-industrial-graphics-2-PS.jpg" alt='user pic'/>
             </div>
             <div className={style.services}>
                 <h3>Services</h3>
@@ -35,8 +35,8 @@ const Profile = () => {
         </div> 
         <div className={style.right}>
             <div className={style.name}>
-                <h3>Ms. Julee</h3>
-                <p>Rusian</p>
+                <h3>Horil Prasad</h3>
+                <p>Cleaner</p>
                 <h4>Ratings</h4>
                 <div className={style.rating}>
                     <span>★</span>
