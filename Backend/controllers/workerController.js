@@ -44,7 +44,7 @@ const workerRegistration = asyncHandler ( async (req, res) => {
     
 
     if(worker){
-        res.status(201).json({_id: worker.id, name: worker.name, email: worker.email, phone: worker.phone, address: worker.address});
+        res.status(201).json({_id: worker.id, name: worker.name, email: worker.email, phone: worker.phone, imageUrl: worker.imageUrl});
         // res.status(201).json([{message: "User added!"}, worker]);
         console.log(`${worker}\n Worker registered successfully!`);
     }

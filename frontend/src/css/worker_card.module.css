@@ -1,6 +1,6 @@
 .container{
     display: flex;
-    background-color: #fff;
+    background-color: #d0cff3;
     width: 300px;
     height: 180px;
     box-shadow: 1px 1px 5px rgb(168, 166, 166);
@@ -11,14 +11,16 @@
     box-shadow: none;
 }
 .profile{
-    width: 25%;
+    width: 30%;
 }
 
 .profile img{
     width: 70px;
     height: 70px;
-    padding-left: 0.5rem;
-    padding-top: 0.5rem;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    border-radius: 50%;
+    border: 1px solid black;
 }
 .details{
     padding: 1rem;
@@ -45,4 +47,13 @@
     padding: 0.3rem;
     border-radius: 5px;
     box-shadow: 1px 1px 3px #868484;
+}
+.ratings{
+    display: flex;
+    justify-content: center;
+    color: rgb(12, 175, 39);
+    padding-left: 0.2rem;
+}
+.ratings span{
+    font-size: 1.3rem;
 }

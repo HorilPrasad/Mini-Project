@@ -1,9 +1,13 @@
 
 
 .section{
-    padding: 1rem 0rem;
+    padding: 2rem 0rem;
+    padding-bottom: 4rem;
     box-shadow: 1px 1px 10px rgb(148, 148, 148);
-    margin: 1rem 1rem;
+    margin-top: 1rem;
+    margin-bottom: 4rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 
 .section_heading{

@@ -1,0 +1,100 @@
+.container{
+    display: flex;
+    min-height: 80vh;
+    padding: 2rem;
+}
+.left{
+    min-width: 300px;
+    padding: 1rem;
+}
+.services{
+    margin-top: 0.8rem;
+    max-width: 250px;
+}
+.services_list{
+    display: flex;
+    flex-wrap: wrap;
+}
+.list_item{
+    list-style: none;
+    margin: 0.5rem;
+    padding: 0.3rem;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px #868484;
+}
+.profile_img img{
+    width: 200px;
+    height: 200px;
+    object-fit: fill;
+}
+
+.logout{
+    margin-top: 2rem;
+}
+.right{
+    padding: 1rem;
+}
+.right h4{
+    font-size: 1.6rem;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+}
+.name h3{
+    font-size: 2rem;
+}
+.name p{
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+    color: var(--primary);
+    font-weight: 600;
+}
+.name h4{
+    margin-top: 1rem;
+    font-size: 1.4rem;
+}
+.name span{
+    font-size: 2rem;
+    color: blue;
+}
+
+.about {
+    margin-top: 0.8rem;
+}
+
+.about_list{
+    display: flex;
+    margin-bottom: 0.8rem;
+    align-items: center;
+}
+
+.about_list h3{
+    min-width: 150px;
+}
+.about_list p{
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.working_list{
+    padding: 1rem;
+    min-width: 450px;
+}
+.working_list h3{
+    text-align: center;
+    font-size: 1.4rem;
+}
+.working_list tr td{
+    padding: 0.8rem;
+}
+.working_list table{
+    margin-top: 10px;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+.working_list tr{
+    padding: 1rem;
+}
+.working_list tr th{
+    padding: 0.8rem;
+    background-color: #dbdbdb;
+}

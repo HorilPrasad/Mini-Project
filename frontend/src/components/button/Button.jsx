@@ -17,7 +17,8 @@ export const Button = ({
     onClick,
     buttonStyle,
     buttonSize,
-    loading
+    loading,
+    disabled
 }) => {
     const checkButtonStyle = STYLES.includes(buttonStyle) ? buttonStyle: STYLES[0]
 
@@ -25,7 +26,7 @@ export const Button = ({
     
     return(
         <button className={`btn ${checkButtonStyle} ${checkButtonSize}`} onClick={onClick}
-        type = {type} >{
-            loading?<div className='loader'></div>:children}</button>
+        type = {type} disabled={disabled}>{
+            loading?<div className='btn_containt'><div className='loader'></div>{children}</div>:children}</button>
     )
 }

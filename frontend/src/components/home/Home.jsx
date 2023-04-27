@@ -5,10 +5,11 @@ import { Divider } from '../divider/Divider';
 import Card from '../card/Card';
 import ReviewCard from '../review/ReviewCard';
 import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 const Home = () => {
 
     const [feadback, setfeadback] = useState();
-
+    const navigate = useNavigate();
     const getFeadbackData = async () => {
         const res = await fetch('http://localhost:5000/api/feedback');
 
@@ -17,6 +18,11 @@ const Home = () => {
             setfeadback(data);
         }
     }
+
+    const goWorkerPage = ()=>{
+        navigate('/workers')
+    }
+
     useEffect(() => {
         getFeadbackData();
     }, []);
@@ -28,7 +34,7 @@ const Home = () => {
                 <div className="hero-left">
                     <h1>Service with care, satisfaction guaranteed.</h1>
                     <p>We are a certified company. We Provide the best services like <strong>carpainter, cleaning, electrician, plumber</strong> and more.</p>
-                    <Button buttonSize="btn--large">Explore</Button>
+                    <Button buttonSize="btn--large" onClick={goWorkerPage}>Explore</Button>
                 </div>
                 <div className="hero-right">
                     <img src="https://www.freepnglogos.com/uploads/workers-png/workers-how-build-loyal-construction-staff-steps-5.png" alt="heor image" />
@@ -41,7 +47,7 @@ const Home = () => {
             <section className="services">
                 {ServiceList.map((item, index) => {
                     return (
-                        <Card key={index} service={item.title} imageUrl={item.imageUrl}></Card>
+                        <Link to={`/workers/Top ${item.title}`}><Card key={index} service={item.title} imageUrl={item.imageUrl}></Card></Link>
                     )
                 })}
             </section>

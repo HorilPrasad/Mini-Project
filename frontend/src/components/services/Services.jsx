@@ -41,18 +41,11 @@ const Services = () => {
     return (
         <div className={style.container}>
             <div className={style.search}>
-                <h2 className={style.heading}>Top Workers</h2>
-                <div className={style.top_more}><Button>more</Button></div>
                 <form onSubmit={submit} className={style.search_box}>
-                    <ReactSearchBox data={data} placeholder="Search..." onChange={(record) => setText(record)} leftIcon={<FaSearch />} iconBoxSize="40px" />
+                    <ReactSearchBox data={data} placeholder="Search..."  onChange={(record) => setText(record)} leftIcon={<FaSearch />} iconBoxSize="40px" />
                 </form>
             </div>
-            <div className={style.top_workers}>
-                <Worker />
-                <Worker />
-                <Worker />
-                <Worker />
-            </div>
+            <Section name="Top Workers"/>
             <hr />
             <Divider>workers</Divider>
             <Section name="Top Electrician"/>
