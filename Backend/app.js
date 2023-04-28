@@ -8,7 +8,6 @@ const cookieParser = require('cookie-parser');
 const sendMail = require('./controllers/sendMail');
 const cors = require('cors');
 
-
 connectDb();
 const app = express();
 app.use(cors());

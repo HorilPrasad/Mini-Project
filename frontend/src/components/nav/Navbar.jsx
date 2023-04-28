@@ -44,7 +44,7 @@ const Navbar = () =>{
                     :<li><Link className="nav-links-mobile" to='/login'>login</Link></li>
                 }
                 {
-                    loginStatus ?<li><Link  to='/users/profile'><img className='nav-profile-pic' src={user.imageUrl} alt="pic"/></Link></li> 
+                    loginStatus ?<li><Link  to={`/users/profile/${user.id}`}><img className='nav-profile-pic' src={user.imageUrl} alt="pic"/></Link></li> 
                     :<li><Link className='nav-btn' to="/login"><Button>Login</Button></Link></li>
                     
                 }

@@ -5,11 +5,11 @@ import machenic from '../img/machenic.png'
 export const ServiceList = [
     {
     title:"Electrician",
-    imageUrl:"https://i0.wp.com/coneqtecuniversal.com/wp-content/uploads/2016/02/electrician.png?ssl=1"
+    imageUrl:"https://img.freepik.com/free-photo/man-electrical-technician-working-switchboard-with-fuses_169016-24062.jpg?w=2000"
     },
     {
         title:"Cleaner",
-        imageUrl:cleaner
+        imageUrl:"https://www.shutterstock.com/image-photo/cleaner-mask-on-her-face-260nw-1812615982.jpg"
     },
     {
         title:"Machenic",
@@ -20,15 +20,11 @@ export const ServiceList = [
         imageUrl:carpainter
     },
     {
-        title:"",
+        title:"Plumber",
+        imageUrl:"https://thumbs.dreamstime.com/b/plumber-work-bathroom-plumbing-repair-service-assemble-install-concept-plumber-work-bathroom-plumbing-repair-113995223.jpg"
+    },
+    {
+        title:"Maid",
         imageUrl:cleaner
-    },
-    {
-        title:"",
-        imageUrl:electrician
-    },
-    {
-        title:"New card",
-        imageUrl:carpainter
     },
 ] 

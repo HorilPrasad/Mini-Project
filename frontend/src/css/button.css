@@ -38,7 +38,12 @@
     border: 1px solid #6568f4;
     transition: all 0.4s ease-out;
 }
-
+.btn--outline:hover{
+    background-color: #6568f4;
+    border: 1px solid #6568f4;
+    color: #fff !important;
+    transition: all 0.5s ease-out;
+}
 .btn--medium {
     padding: 5px 20px;
     border-radius: 8px;

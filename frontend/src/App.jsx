@@ -7,12 +7,12 @@ import Register from "./components/register/Register"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Feadback from "./components/feadback/Feadback"
-import WorkerProfile from "./components/worker_profile/WorkerProfile"
 import Services from "./components/services/Services"
 import ContactUs from "./components/contact/ContactUs"
 import { UserProvider } from "./components/shared/userContext"
 import Workers from "./components/services/Workers"
 import Profile from "./components/worker_profile/Profile"
+
 const App = () =>{
   return(
     <BrowserRouter>
@@ -22,7 +22,6 @@ const App = () =>{
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/feadback" element={<Feadback/>}/>
-        <Route path="/profile" element={<WorkerProfile/>}/>
         <Route path="/workers" element={<Services/>}/>
         <Route path="/contact" element={<ContactUs/>}/>
         <Route path="/workers/:name" element={<Workers/>}/>

@@ -2,6 +2,7 @@
     display: flex;
     min-height: 80vh;
     padding: 2rem;
+    justify-content: center;
 }
 .left{
     min-width: 300px;
@@ -78,6 +79,7 @@
 .working_list{
     padding: 1rem;
     min-width: 450px;
+    margin-left: 50px;
 }
 .working_list h3{
     text-align: center;
@@ -97,4 +99,8 @@
 .working_list tr th{
     padding: 0.8rem;
     background-color: #dbdbdb;
+}
+.contact_btn{
+    display: flex;
+    gap: 1rem;
 }

@@ -99,11 +99,9 @@ const workerLogin = asyncHandler ( async (req, res) => {
 //@access private
 
 const workerProfile = asyncHandler ( async (req, res) => {
-    const workerData = req.user;
-    // console.log(req.body);
-    console.log("Worker: ", workerData._id);
-    const workerId = workerData._id;
-    const worker = await Worker.findOne({ _id: workerId});
+    const id = req.params;
+    console.log(req.params);
+    const worker = await Worker.findOne({ _id: id.id});
     console.log(worker);
     res.status(200).json(worker);
 });
