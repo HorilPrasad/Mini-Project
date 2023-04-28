@@ -3,6 +3,7 @@ import style from '../../css/feadback.module.css'
 import { useState } from "react";
 import img from '../../img/chat_g.png'
 import {toast} from 'react-toastify'
+import { baseUrl } from "../shared/baseUrl";
 const Feadback = () => {
     const [inputs,setInputs] = useState({name:"",email:"",rating:"",message:""}); 
 
@@ -26,7 +27,7 @@ const Feadback = () => {
             toast.error("All field mindatory!",{theme:'colored'})
         else
         {
-            const res = await fetch('http://localhost:5000/api/feedback',{
+            const res = await fetch(baseUrl+'/api/feedback',{
                 method:'POST',
                 headers:{
                     'Content-Type': 'application/json'

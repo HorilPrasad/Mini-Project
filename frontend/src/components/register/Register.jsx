@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { storage } from "../../firebase/config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { useUser } from "../shared/userContext";
+import { baseUrl } from "../shared/baseUrl";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -73,7 +74,7 @@ const Register = () => {
       await uploadImage();
       setbuttonLoading(false)
       // const email = Inputs.email;
-      // const res = await fetch("http://localhost:5000/api/verification/sendMail",{
+      // const res = await fetch(baseUrl + "/api/verification/sendMail",{
       //   method: 'POST',
       //   headers: {
       //     'Content-Type': 'application/json'
@@ -116,7 +117,7 @@ const Register = () => {
     else {
       const email = Inputs.email;
       console.log(otp)
-      const res = await fetch("http://localhost:5000/api/verification/verifyOtp", {
+      const res = await fetch(baseUrl+"/api/verification/verifyOtp", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -140,7 +141,7 @@ const Register = () => {
 
     console.log(Inputs);
     if (!worker) {
-      const res = await fetch('http://localhost:5000/api/users/register', {
+      const res = await fetch(baseUrl+'/api/users/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -163,7 +164,7 @@ const Register = () => {
     } else {
       const list = serviceList.map(a => a.value);
 
-      const res = await fetch('http://localhost:5000/api/workers/register', {
+      const res = await fetch(baseUrl+'/api/workers/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

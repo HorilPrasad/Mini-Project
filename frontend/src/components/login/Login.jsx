@@ -6,6 +6,7 @@ import "../../css/login.css"
 import singImg from "../../img/sign-up-form.png";
 import {useUser} from '../shared/userContext';
 import {toast} from 'react-toastify';
+import { baseUrl } from "../shared/baseUrl";
 const Login = () => {
 
   const {login ,updateUser} = useUser();
@@ -60,7 +61,7 @@ const Login = () => {
       setwarnpass(true); 
     }else 
     { 
-      const res = await fetch("http://localhost:5000/api/users/login",{
+      const res = await fetch(baseUrl+"/api/users/login",{
         method: "POST",
         headers:{
           "Content-Type":"application/json"

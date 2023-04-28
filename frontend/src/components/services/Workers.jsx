@@ -3,6 +3,7 @@ import { Divider } from "../divider/Divider";
 import { useEffect, useState} from 'react'
 import Worker from '../card/Worker'
 import style from '../../css/workers.module.css'
+import { baseUrl } from "../shared/baseUrl";
 
 const Workers = () => {
     const {name} = useParams();
@@ -10,7 +11,7 @@ const Workers = () => {
     const [data, setdata] = useState();
 
     const getWorkersData = async(type) =>{
-      const res = await fetch('http://localhost:5000/api/workers/getAllWorkers');
+      const res = await fetch(baseUrl+'/api/workers/getAllWorkers');
 
       if(res.status === 200)
       {

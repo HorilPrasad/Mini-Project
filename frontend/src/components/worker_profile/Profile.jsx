@@ -10,7 +10,7 @@ const Profile = () => {
     const {logout} = useUser()
     const {id} = useParams();
     const [userData, setUserData] = useState();
-    
+    const {user} = useUser();
 
 
     const Logout = () =>{
@@ -30,7 +30,8 @@ const Profile = () => {
 
     useEffect(() => {
         getUserProfile();
-    }, []);
+        console.log(user);
+    }, [id]);
 
 
 if(userData)
@@ -49,9 +50,9 @@ if(userData)
                 <li className={style.list_item}>Plumber</li>
                 </ul>
             </div>
-            <div className={style.logout}>
+            {(user && user.id ===id) &&<div className={style.logout}>
             <Button buttonSize='btn--large' onClick={Logout}>logout</Button>
-            </div>
+            </div>}
         </div> 
         <div className={style.right}>
             <div className={style.name}>

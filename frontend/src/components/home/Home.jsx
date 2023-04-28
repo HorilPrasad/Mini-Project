@@ -6,12 +6,13 @@ import Card from '../card/Card';
 import ReviewCard from '../review/ReviewCard';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { baseUrl } from '../shared/baseUrl';
 const Home = () => {
 
     const [feadback, setfeadback] = useState();
     const navigate = useNavigate();
     const getFeadbackData = async () => {
-        const res = await fetch('http://localhost:5000/api/feedback');
+        const res = await fetch(baseUrl+'/api/feedback');
 
         if (res.status === 200) {
             const data = await res.json();
