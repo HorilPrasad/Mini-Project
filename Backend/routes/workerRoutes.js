@@ -9,7 +9,7 @@ const {
     getAllWorkers,
     deleteWorker,
     workerLogout
-} = require("../controllers/workerController");
+} = require("../controllers/workerController").default;
 const cookieParser = require("cookie-parser");
 
 const router = express.Router();

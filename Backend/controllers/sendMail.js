@@ -1,11 +1,10 @@
-
 const dotenv = require('dotenv').config();
-const nodemailer = require("nodemailer");
+import { createTestAccount, createTransport } from "nodemailer";
 
     async function sendMail(email, code) {
-    let testAccount = await nodemailer.createTestAccount();
+    let testAccount = await createTestAccount();
     // connect with the smtp
-    let transporter = await nodemailer.createTransport({
+    let transporter = await createTransport({
         service: 'gmail',
         host: 'smtp.gmail.com',
         port: 465,
@@ -159,4 +158,4 @@ const nodemailer = require("nodemailer");
     }  
 };
 
-module.exports = sendMail;
+export default sendMail;

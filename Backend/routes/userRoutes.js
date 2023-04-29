@@ -9,7 +9,7 @@ const {
     editUser,
     getAllUsers,
     deleteUser,
-} = require("../controllers/userController");
+} = require("../controllers/userController").default;
 
 const router = express.Router();
 router.use(cookieParser());

@@ -1,12 +1,13 @@
-const asyncHandler = require("express-async-handler");
-const User = require("../models/userModel");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const cookie = require("cookie-parser");
+import asyncHandler from "express-async-handler";
+import { create, findOneAndDelete, findOne, find } from "../models/userModel";
+import { genSaltSync, hash, compare } from "bcrypt";
+import { sign } from "jsonwebtoken";
+import cookie from "cookie-parser";
 const dotenv = require("dotenv").config();
-const sendMail = require("../controllers/sendMail");
-const otpGenerator = require('otp-generator');
-const optVerification = require("../models/otpVerification");
+import sendMail from "../controllers/sendMail";
+import otpGenerator from 'otp-generator';
+import optVerification from "../models/otpVerification";
+import { findOne as _findOne, create as _create } from '../models/AllUsers';
 const saltRounds = 10;
 //@desc Register a user
 //@route POST /api/users/register
@@ -21,18 +22,18 @@ const userRegistration = asyncHandler ( async (req, res) => {
         throw new Error("All fields are mandatory");
     }
 
-    const userAvailable  = await User.findOne({ email });
+    const userAvailable  = await _findOne({ email });
 
     if(userAvailable){
         res.status(400);
         throw new Error("User already registered with this email!");
     }
 
-    const salt = bcrypt.genSaltSync(saltRounds);
+    const salt = genSaltSync(saltRounds);
 
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await hash(password, salt);
     console.log("Hashed Password: ", hashedPassword);
-    const user = await User.create( {
+    const user = await create( {
         name,
         phone, 
         email,
@@ -44,7 +45,18 @@ const userRegistration = asyncHandler ( async (req, res) => {
     console.log(`${user}\nUser registered successfully!`);
 
     if(user){
-        res.status(201).json({_id:user._id, name: user.name, email: user.email,imageUrl:user.imageUrl});
+        const addUser = await _create({
+            email,
+            password:hashedPassword,
+            userType:'user'
+        })
+        if(addUser)
+            res.status(201).json({_id:user._id, name: user.name, email: user.email,imageUrl:user.imageUrl});
+        else{   
+            await findOneAndDelete({email})
+            res.status(400);
+            throw new Error('Problem in creating user!')
+        }
     }
     else{
         res.status(400);
@@ -67,14 +79,14 @@ const userLogin = asyncHandler ( async (req, res) => {
     }
 
     // comparing password
-    const user = await User.findOne({ email });
+    const user = await findOne({ email });
 
-    if(user && (await bcrypt.compare(password, user.password))){
+    if(user && (await compare(password, user.password))){
         const payload = {
             _id: user._id,email
         };
         
-        const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "2h"});
+        const token = sign(payload, process.env.SECRET_KEY, { expiresIn: "2h"});
         res.cookie('access_token', token, {
             httpOnly: true
         });
@@ -97,10 +109,9 @@ const userLogin = asyncHandler ( async (req, res) => {
 
 const userProfile = asyncHandler ( async (req, res) => {
     const id = req.params;
-    // console.log(req.body);
     console.log("User: ", id);
     const userId = userData._id;
-    const user = await User.findOne({ _id: id});
+    const user = await findOne({ _id: id});
     console.log(user);
     res.status(200).json(user);
 });
@@ -113,7 +124,7 @@ const editUser = asyncHandler ( async (req, res) => {
     // console.log("editUser: ",  req.user);
    const userId = req.user._id;
    // finding the user 
-   const user = await User.findOne({_id: userId});
+   const user = await findOne({_id: userId});
     // console.log("user:" ,user);
    if(!user){
         res.status(404);
@@ -129,9 +140,9 @@ const editUser = asyncHandler ( async (req, res) => {
    user.address = address || user.address;
 
 
-   const salt = bcrypt.genSaltSync(saltRounds);
+   const salt = genSaltSync(saltRounds);
 
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await hash(password, salt);
    user.password = password ? hashedPassword : user.password;
 
    console.log("updated");
@@ -154,7 +165,7 @@ const editUser = asyncHandler ( async (req, res) => {
 //@access private -admin
 
 const getAllUsers = asyncHandler ( async (req, res) => {
-    const allUsers = await User.find();
+    const allUsers = await find();
     res.status(200).json(allUsers);
 });
 
@@ -166,7 +177,7 @@ const deleteUser = asyncHandler ( async (req, res) => {
     const user = req.user;
     console.log("inside delete user:", user);
     const userId = user._id;
-    const deletedUser = await User.findOneAndDelete({_id : userId});
+    const deletedUser = await findOneAndDelete({_id : userId});
 
     if(!deletedUser){
         res.status(400);
@@ -187,7 +198,7 @@ const userLogout = asyncHandler ( async (req, res) =>{
 });
 
 
-module.exports = {
+export default {
     userRegistration,
     userLogin,
     userLogout,
