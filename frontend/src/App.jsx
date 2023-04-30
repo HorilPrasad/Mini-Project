@@ -12,20 +12,23 @@ import ContactUs from "./components/contact/ContactUs"
 import { UserProvider } from "./components/shared/userContext"
 import Workers from "./components/services/Workers"
 import Profile from "./components/worker_profile/Profile"
+import {RequiredAuth} from './components/Auth/AuthRequire'
+import { AlreadyLoged } from "./components/Auth/AlreadyLoged"
 
 const App = () =>{
   return(
     <BrowserRouter>
       <Navbar/>
+      
       <Routes>
         <Route path="/" element={<Home/>}/>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/register" element={<Register/>}/>
+        <Route path="/login" element={<AlreadyLoged><Login/></AlreadyLoged>}/>
+        <Route path="/register" element={<AlreadyLoged><Register/></AlreadyLoged>}/>
         <Route path="/feedback" element={<Feedback/>}/>
-        <Route path="/workers" element={<Services/>}/>
+        <Route path="/workers" element={<RequiredAuth><Services/></RequiredAuth>}/>
         <Route path="/contact" element={<ContactUs/>}/>
-        <Route path="/workers/:name" element={<Workers/>}/>
-        <Route path="/users/profile/:id" element={<Profile/>}/>
+        <Route path="/workers/:name" element={<RequiredAuth><Workers/></RequiredAuth>}/>
+        <Route path="/users/profile/:id" element={<RequiredAuth><Profile/></RequiredAuth>}/>
       </Routes>
       <Footer/>
       <ToastContainer/>

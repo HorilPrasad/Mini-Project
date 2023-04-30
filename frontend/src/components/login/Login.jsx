@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import  { useState ,useEffect} from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from "../button/Button";
 import { Input } from "../input/Input";
@@ -9,7 +9,7 @@ import {toast} from 'react-toastify';
 import { baseUrl } from "../shared/baseUrl";
 const Login = () => {
 
-  const {login ,updateUser} = useUser();
+  const {loginStatus,login ,updateUser} = useUser();
 
   const navigate = useNavigate();
   const [inputs, setinputs] = useState({
@@ -105,6 +105,11 @@ const Login = () => {
       seteye(true);
     }
   };
+
+
+  useEffect(() => {
+  }, []);
+
   return (
     <>
       <div className="contain">

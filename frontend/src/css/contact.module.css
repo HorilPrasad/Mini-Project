@@ -160,7 +160,7 @@
     margin: 2rem;
     max-width: 35rem;
     margin-left: 0rem;
-    font-size: 1.10em;
+    font-size: 1.4rem;
 }
 
 .phone{
@@ -168,16 +168,19 @@
     margin-left: 0rem;
     display: flex;
     flex-direction: row;
+    font-size: 1.4rem;
 }
 
 .email{
     margin: 1rem;
     margin-left: 0rem;
     display: flex;
+    font-size: 1.4rem;
     flex-direction: row;
 }
  .name_field, .email_field, .send_field, .phone_field, .user_msg_field{
     width: 100%;
+    font-size: 1.3rem;
  }
 
  .name_field, .email_field, .send_field, .phone_field, .user_msg_field{
