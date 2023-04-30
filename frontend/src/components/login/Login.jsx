@@ -23,7 +23,7 @@ const Login = () => {
 
   const [eye, seteye] = useState(true);
   const [pass, setpass] = useState("password");
-
+  const img = 'https://static.vecteezy.com/system/resources/previews/002/002/257/original/beautiful-woman-avatar-character-icon-free-vector.jpg'
 
 
   const inputEvent = (event) => {
@@ -61,7 +61,8 @@ const Login = () => {
       setwarnpass(true); 
     }else 
     { 
-      const res = await fetch(baseUrl+"/api/users/login",{
+      
+      const res = await fetch(baseUrl+"/api/login",{
         method: "POST",
         headers:{
           "Content-Type":"application/json"
@@ -73,12 +74,21 @@ const Login = () => {
       {
         const data = await res.json();
         toast.success('Login Successfully!', { theme: 'colored' })
-        localStorage.clear();
+        
         login()
-        const currentUser = {id:data._id,name:data.name,email:data.email,imageUrl:data.imageUrl}
-        localStorage.setItem('user', JSON.stringify(currentUser));
-        updateUser(currentUser);
-        navigate('/')
+        if(data.userType != 'admin'){
+          const currentUser = {id:data._id,name:data.name,email:data.email,imageUrl:data.imageUrl,userType:data.userType}
+          localStorage.setItem('user', JSON.stringify(currentUser));
+          updateUser(currentUser);
+          navigate('/')
+        }else
+        {
+          const currentUser = {id:data._id,name:"Admin",email:data.email,imageUrl:img,userType:data.userType}
+          localStorage.setItem('user', JSON.stringify(currentUser));
+          updateUser(currentUser);
+          navigate('/')
+        }
+        
       }
       else
         toast.error("Invalid user!",{theme:'colored'})

@@ -1,9 +1,9 @@
-import express from "express";
-import authentication from "../middleware/authentication";
-import cookieParser from "cookie-parser";
+const express = require("express");
+const authentication = require("../middleware/authentication");
+const cookieParser = require("cookie-parser");
 
 
-import {addAdmin} from '../controllers/admin';
+const {addAdmin} = require('../controllers/admin');
 
 const router = express.Router();
 router.use(cookieParser());

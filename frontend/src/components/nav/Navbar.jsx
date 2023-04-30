@@ -16,6 +16,7 @@ const Navbar = () =>{
             updateUser(JSON.parse(currentUser));
             login()
         }
+        
     },[loginStatus])
 
    

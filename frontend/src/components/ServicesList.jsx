@@ -12,11 +12,11 @@ export const ServiceList = [
         imageUrl:"https://www.shutterstock.com/image-photo/cleaner-mask-on-her-face-260nw-1812615982.jpg"
     },
     {
-        title:"Machenic",
+        title:"Mechanic",
         imageUrl:machenic
     },
     {
-        title:"Carpainter",
+        title:"Carpenter",
         imageUrl:carpainter
     },
     {

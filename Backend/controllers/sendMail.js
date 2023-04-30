@@ -1,5 +1,5 @@
 const dotenv = require('dotenv').config();
-import { createTestAccount, createTransport } from "nodemailer";
+const nodemailer = require("nodemailer");
 
     async function sendMail(email, code) {
     let testAccount = await createTestAccount();
@@ -158,4 +158,4 @@ import { createTestAccount, createTransport } from "nodemailer";
     }  
 };
 
-export default sendMail;
+module.exports = sendMail;

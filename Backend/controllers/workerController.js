@@ -1,9 +1,9 @@
-import asyncHandler from "express-async-handler";
-import { create, findOneAndDelete, findOne, find } from "../models/workerModel";
-import { findOne as _findOne, create as _create } from "../models/AllUsers";
-import { genSaltSync, hash, compare } from "bcrypt";
-import { sign } from "jsonwebtoken";
-import cookie from "cookie-parser";
+const asyncHandler = require("express-async-handler");
+const Worker = require("../models/workerModel");
+const AllUsers = require('../models/AllUsers'); 
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const cookie = require("cookie-parser");
 const dotenv = require("dotenv").config();
 const saltRounds = 10;
 //@desc Register a worker
@@ -20,17 +20,17 @@ const workerRegistration = asyncHandler ( async (req, res) => {
         throw new Error("All fields are mandatory");
     }
 
-    const workerAvailable  = await _findOne({ email });
-
+    const workerAvailable  = await AllUsers.findOne({ email });
+    
     if(workerAvailable){
         res.status(400);
         throw new Error("Worker already registered with this email!");
     }
-    const salt = genSaltSync(saltRounds);
-
-    const hashedPassword = await hash(password, salt);
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hashedPassword = await bcrypt.hash(password, salt);
     console.log("Hashed Password: ", hashedPassword);
-    const worker = await create( {
+    
+    const worker = await Worker.create( {
         name,
         phone,
         email,
@@ -44,17 +44,18 @@ const workerRegistration = asyncHandler ( async (req, res) => {
 
 
     if(worker){
-        const addUser = await _create({
+        console.log(worker)
+        const addUser = await AllUsers.create({
             email,
             password:hashedPassword,
             userType:'worker'
         })
         if(addUser){
-            res.status(201).json({_id: worker.id, name: worker.name, email: worker.email, phone: worker.phone, imageUrl: worker.imageUrl});
+            res.status(201).json({_id: worker.id, name: worker.name, email: worker.email, phone: worker.phone, imageUrl: worker.imageUrl, userType:'worker'});
             console.log(`${worker}\n Worker registered successfully!`);
         }else
         {
-            await findOneAndDelete({email});
+            await Worker.findOneAndDelete({email});
             res.status(400);
             throw new Error('Problem in creating user');
         }
@@ -80,15 +81,15 @@ const workerLogin = asyncHandler ( async (req, res) => {
     }
 
     // comparing password
-    const worker = await findOne({ email });
+    const worker = await Worker.findOne({ email });
 
-    if(worker && (await compare(password, worker.password))){
+    if(worker && (await bcrypt.compare(password, worker.password))){
         const payload = {
             _id: worker._id,
             email
         };
         
-        const token = sign(payload, process.env.SECRET_KEY, { expiresIn: "2h"});
+        const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "2h"});
         res.cookie('access_token', token, {
             httpOnly: true
         });
@@ -112,7 +113,7 @@ const workerLogin = asyncHandler ( async (req, res) => {
 const workerProfile = asyncHandler ( async (req, res) => {
     const id = req.params;
     console.log(req.params);
-    const worker = await findOne({ _id: id.id});
+    const worker = await Worker.findOne({ _id: id.id});
     console.log(worker);
     res.status(200).json(worker);
 });
@@ -126,7 +127,7 @@ const editWorker = asyncHandler ( async (req, res) => {
    const workerData = req.user;
    const workerId = workerData._id;
    // finding the worker 
-   const worker = await findOne({_id: workerId});
+   const worker = await Worker.findOne({_id: workerId});
     // console.log("worker:" ,worker);
    if(!worker){
         res.status(404);
@@ -171,7 +172,7 @@ const editWorker = asyncHandler ( async (req, res) => {
 //@access private -admin
 
 const getAllWorkers = asyncHandler ( async (req, res) => {
-    const allWorkers = await find();
+    const allWorkers = await Worker.find();
     res.status(200).json(allWorkers);
 });
 
@@ -183,7 +184,7 @@ const deleteWorker = asyncHandler( async (req, res) => {
     const workerData = req.user;
     const workerId = workerData._id;
 
-    const deletedWorker = await findOneAndDelete({_id : workerId});
+    const deletedWorker = await Worker.findOneAndDelete({_id : workerId});
 
     if(!deletedWorker){
         res.status(400);
@@ -207,7 +208,7 @@ const workerLogout = asyncHandler ( async (re, res) =>{
 
 
 
-export default {
+module.exports = {
     workerRegistration,
     workerLogin,
     workerLogout,

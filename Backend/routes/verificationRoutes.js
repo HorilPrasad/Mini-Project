@@ -1,5 +1,5 @@
 const express = require('express');
-const {sendMail, verifyOtp} = require("../controllers/verification").default;
+const {sendMail, verifyOtp} = require("../controllers/verification");
 
 const router = express.Router();
 

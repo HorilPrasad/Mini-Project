@@ -1,8 +1,8 @@
-import { genSaltSync, hash, compare } from 'bcrypt';
+const bcrypt = require('bcrypt');
 const dotenv = require('dotenv').config();
-import { createTransport } from "nodemailer";
-import otpGenerator from 'otp-generator';
-import { create, findOne, findOneAndDelete } from '../models/otpVerification';
+const nodemailer = require("nodemailer");
+const otpGenerator = require('otp-generator');
+const otpRecord = require('../models/otpVerification');
 
 
 //@desc send mail
@@ -12,7 +12,7 @@ const sendMail = async (req, res) => {
     const {email} = req.body;
    try{
     // connect with the smtp
-    let transporter = createTransport({
+    let transporter = nodemailer.createTransport({
         service: 'gmail',
         host: 'smtp.gmail.com',
         port: 465,
@@ -29,8 +29,8 @@ const sendMail = async (req, res) => {
     // console.log(otp_record);
         const otp = parseInt(Math.random() * 9000 + 1000) + "";
         console.log(otp);
-        const salt = genSaltSync(10);
-        const hashedOtp = await hash(otp, salt);
+        const salt = bcrypt.genSaltSync(10);
+        const hashedOtp = await bcrypt.hash(otp, salt);
     
     let info = await transporter.sendMail({
         from: process.env.mailID, // sender address
@@ -166,7 +166,7 @@ const sendMail = async (req, res) => {
     });
  
     if(info){
-        const otp_record = await create({
+        const otp_record = await otpRecord.create({
             email,
             otp: hashedOtp
         });
@@ -200,13 +200,13 @@ const verifyOtp = async (req, res) => {
         const {email, otp} = req.body;
         // getting otp record
         console.log(`${otp} ${email}`);
-       const user = await findOne({ email });
+       const user = await otpRecord.findOne({ email });
 
         //verifying the otp
-       if(user && (await compare(otp, user.otp))){
+       if(user && (await bcrypt.compare(otp, user.otp))){
            console.log("user verified!");
            //deleting the otp record
-           const deleteRecord = await findOneAndDelete({ email });
+           const deleteRecord = await otpRecord.findOneAndDelete({ email });
            if(!deleteRecord){
             res.status(400).json({message: "Unable to delete record"});
            }
@@ -222,4 +222,4 @@ const verifyOtp = async (req, res) => {
     }
 }; 
 
-export default {sendMail, verifyOtp};
+module.exports = {sendMail, verifyOtp};

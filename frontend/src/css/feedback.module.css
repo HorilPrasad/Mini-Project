@@ -1,6 +1,5 @@
 :root {
     --primary: #5437b6;
-
 }
 
 .container {
@@ -87,7 +86,6 @@
 
 .rating input {
     display: none;
-    
 }
 
 .rating label {

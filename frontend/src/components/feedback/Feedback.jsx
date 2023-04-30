@@ -1,10 +1,10 @@
 import { Button } from "../button/Button";
-import style from '../../css/feadback.module.css'
+import style from '../../css/feedback.module.css'
 import { useState } from "react";
 import img from '../../img/chat_g.png'
 import {toast} from 'react-toastify'
 import { baseUrl } from "../shared/baseUrl";
-const Feadback = () => {
+const Feedback = () => {
     const [inputs,setInputs] = useState({name:"",email:"",rating:"",message:""}); 
 
     const InputEvent = (e) =>{
@@ -80,4 +80,4 @@ const Feadback = () => {
     )
 }
 
-export default Feadback;
+export default Feedback;

@@ -1,5 +1,5 @@
-import asyncHandler from "express-async-handler";
-import { create, find } from "../models/userFeedbackModel";
+const asyncHandler = require("express-async-handler");
+const userFeedback = require("../models/userFeedbackModel");
 const dotenv = require("dotenv").config();
 
 //@desc customer feedback
@@ -14,7 +14,7 @@ const userFeedback_controller = asyncHandler ( async (req, res) => {
         throw new Error("All fields are mandatory!");
     }
 
-    const feedback = await create({
+    const feedback = await userFeedback.create({
         name ,
         email,
         rating,
@@ -33,10 +33,10 @@ const userFeedback_controller = asyncHandler ( async (req, res) => {
 });
 
 const userFeadback_featch = asyncHandler ( async (req, res) => {
-    const feadback = await find();
+    const feadback = await userFeedback.find();
 
     if(feadback)
         res.status(200).json(feadback);
 })
 
-export default {userFeedback_controller , userFeadback_featch};
+module.exports = {userFeedback_controller , userFeadback_featch};

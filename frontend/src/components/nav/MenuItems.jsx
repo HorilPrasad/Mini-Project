@@ -16,8 +16,8 @@ export const MenuItems = [
         cName:"nav-links"
     },
     {
-        title:"Feadback",
-        url:"/feadback",
+        title:"Feedback",
+        url:"/feedback",
         cName:"nav-links"
     }
 

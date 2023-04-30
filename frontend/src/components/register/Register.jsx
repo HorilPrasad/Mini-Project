@@ -27,7 +27,7 @@ const Register = () => {
   const {login ,updateUser} = useUser();
 
   const userTypes = [{ value: 'user', label: 'User' }, { value: 'worker', label: 'Worker' }];
-  const serviceTypes = [{ value: 'electrician', label: 'Electrician' }, { value: 'carpainter', label: 'Carpainter' },
+  const serviceTypes = [{ value: 'electrician', label: 'Electrician' }, { value: 'carpeinter', label: 'Carpeinter' },
   { value: 'cleaner', label: 'Cleaner' }]
 
   useEffect(() => {
@@ -153,7 +153,7 @@ const Register = () => {
         toast.success('Register Successfully!', { theme: 'colored' })
         localStorage.clear();
         login()
-        const currentUser = {id:data._id,name:data.name,email:data.email,imageUrl:data.imageUrl,userType:userType.value}
+        const currentUser = {id:data._id,name:data.name,email:data.email,imageUrl:data.imageUrl,userType:data.userType}
         localStorage.setItem('user', JSON.stringify(currentUser));
         updateUser(currentUser);
         navigate('/')
@@ -177,7 +177,7 @@ const Register = () => {
         const data = await res.json();
         localStorage.clear();
         login();
-        const currentUser = {id:data._id,name:data.name,email:data.email,imageUrl:data.imageUrl,userType:userType.value}
+        const currentUser = {id:data._id,name:data.name,email:data.email,imageUrl:data.imageUrl,userType:data.userType}
         localStorage.setItem('user', JSON.stringify(currentUser));
         updateUser(currentUser)
         toast.success('Register Successfully!', { theme: 'colored' });
