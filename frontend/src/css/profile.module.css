@@ -6,7 +6,7 @@
     flex-wrap: wrap;
 }
 .left{
-    min-width: 300px;
+    min-width: 250px;
     padding: 1rem;
 }
 .services{
@@ -58,6 +58,9 @@
     font-size: 2rem;
     color: blue;
 }
+.name span:nth-child(5){
+    color: #868484;
+}
 
 .about {
     margin-top: 0.8rem;
@@ -77,31 +80,37 @@
     font-weight: 600;
 }
 
-.working_list{
-    padding: 1rem;
-    min-width: 450px;
-    margin-left: 50px;
-}
-.working_list h3{
-    text-align: center;
-    font-size: 1.4rem;
-}
-.working_list tr td{
-    padding: 0.8rem;
-}
-.working_list table{
-    margin-top: 10px;
-    border-collapse: collapse;
-    border: 1px solid black;
-}
-.working_list tr{
-    padding: 1rem;
-}
-.working_list tr th{
-    padding: 0.8rem;
-    background-color: #dbdbdb;
-}
 .contact_btn{
     display: flex;
     gap: 1rem;
+}
+.working_list{
+    width: 48%;
+    padding: 0.2rem;
+    border: 1px solid rgb(0, 0, 0);
+}
+.working_list h2{
+    text-align: center;
+    padding: 1rem;
+}
+.working_list_item{
+    display: grid;
+    grid-template-columns: 15px repeat(5, auto);
+    padding: 0.4rem;
+    box-shadow: 1px 1px 5px black;
+    border-radius: 10px;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.working_list_item h3{
+    padding: 0.4rem;
+    text-align: center;
+}
+.pending{
+    background-color: rgb(235, 135, 5);
+    border-radius: 20px;
+}
+.complete{
+    background-color: green;
+    border-radius: 20px;
 }

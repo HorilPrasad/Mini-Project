@@ -15,7 +15,7 @@ const router = express.Router();
 router.use(cookieParser());
 router.route("/register").post(userRegistration);
 router.route("/login").post(userLogin);
-router.route("/profile/:id").get(authentication,userProfile);
+router.route("/profile/:id").get(userProfile);
 router.route("/editUser").put(authentication, editUser);
 router.route("/getAllUsers").get(getAllUsers);
 router.route("/deleteUser").delete(authentication, deleteUser);

@@ -27,7 +27,7 @@ const Register = () => {
   const {login ,updateUser} = useUser();
 
   const userTypes = [{ value: 'user', label: 'User' }, { value: 'worker', label: 'Worker' }];
-  const serviceTypes = [{ value: 'electrician', label: 'Electrician' }, { value: 'carpeinter', label: 'Carpeinter' },
+  const serviceTypes = [{ value: 'electrician', label: 'Electrician' }, { value: 'carpenter', label: 'Carpenter' },
   { value: 'cleaner', label: 'Cleaner' }]
 
   useEffect(() => {

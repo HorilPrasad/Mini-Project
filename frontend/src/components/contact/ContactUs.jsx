@@ -1,12 +1,15 @@
 import style from '../../css/contact.module.css'
 import { useState } from 'react';
+import { useNavigate} from 'react-router-dom'
 import { Button } from '../button/Button'
 import { toast } from 'react-toastify';
+import phoneImg from '../../img/phone.png'
+import emailImg from '../../img/email_contact.png'
+import { baseUrl } from '../shared/baseUrl';
 const ContactUs = () => {
     const [inputs, setInputs] = useState({name:'', email:'', phone:'', message:''});
-
+    const navigate = useNavigate();
     const handleInput = (event)=>{
-        console.log(event.target.value)
         const name = event.target.name;
         const value = event.target.value;
 
@@ -18,11 +21,26 @@ const ContactUs = () => {
         })
     }
 
-    const SubmitEvent = (e) =>{
+    const SubmitEvent = async(e) =>{
         e.preventDefault();
 
         if(inputs.name === '' || inputs.email === '' | inputs.phone ==='' || inputs.message ==='')
             toast.warn('All field mandatory!',{theme:'colored'})
+        else{
+            const res = await fetch(baseUrl+'/api/contactUs',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify(inputs)
+            })
+
+            if(res.status === 200)
+                toast.success("Message send!");
+            else
+                toast.error("Error in sending message!")
+            navigate('/')
+        }
 
 
     }
@@ -36,7 +54,7 @@ const ContactUs = () => {
                     <div className={style.msg}>Welcome to the EasyWay services we provide an efficient way to find the worker for daily home services like electrician, cleaner, plumber. <br/>Contact us for any queries.</div>
                     <div className={style.phone}>
                         <div>
-                            <img src="./phone.png" alt="" width="54" />
+                            <img src={phoneImg} alt="" width="54" />
                         </div>
                         <div className={style.phone_div}>
                             <div className={style.phone_label}>Phone Number</div>
@@ -45,7 +63,7 @@ const ContactUs = () => {
                     </div>
                     <div className={style.email}>
                         <div>
-                            <img src="./email_contact.png" alt="" width="54" />
+                            <img src={emailImg} alt="" width="54" />
                         </div>
                         <div className={style.email_div}>
                             <div className={style.email_label}>Email ID</div>

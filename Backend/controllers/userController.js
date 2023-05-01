@@ -108,11 +108,14 @@ const userLogin = asyncHandler ( async (req, res) => {
 //@access private
 
 const userProfile = asyncHandler ( async (req, res) => {
-    const id = req.params;
-    console.log("User: ", id);
+    const {id} = req.params;
     const user = await User.findOne({ _id: id});
-    console.log(user);
-    res.status(200).json(user);
+    if(user)
+    {
+        console.log(user);
+        res.status(200).json(user);
+    }
+    res.status(400);
 });
 
 //@desc update user

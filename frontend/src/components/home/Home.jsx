@@ -34,7 +34,7 @@ const Home = () => {
             <section className="hero">
                 <div className="hero-left">
                     <h1>Service with care, satisfaction guaranteed.</h1>
-                    <p>We are a certified company. We Provide the best services like <strong>carpainter, cleaning, electrician, plumber</strong> and more.</p>
+                    <p>We are a certified company. We Provide the best services like <strong>carpenter, cleaning, electrician, plumber</strong> and more.</p>
                     <Button buttonSize="btn--large" onClick={goWorkerPage}>Explore</Button>
                 </div>
                 <div className="hero-right">
