@@ -7,6 +7,9 @@ import singImg from "../../img/sign-up-form.png";
 import {useUser} from '../shared/userContext';
 import {toast} from 'react-toastify';
 import { baseUrl } from "../shared/baseUrl";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import Nav from "../nav/Nav";
+import Footer from "../footer/footer";
 const Login = () => {
 
   const {loginStatus,login ,updateUser} = useUser();
@@ -86,7 +89,7 @@ const Login = () => {
           const currentUser = {id:data._id,name:"Admin",email:data.email,imageUrl:img,userType:data.userType}
           localStorage.setItem('user', JSON.stringify(currentUser));
           updateUser(currentUser);
-          navigate('/')
+          navigate('/admin')
         }
         
       }
@@ -112,6 +115,7 @@ const Login = () => {
 
   return (
     <>
+      <Nav/>
       <div className="contain">
         <div className="cardlogin">
           <div className="form">
@@ -132,6 +136,7 @@ const Login = () => {
                 </div>
                 <div className="input_text">
                   <Input className={` ${warnpass ? "warning" : ""}`} type={pass} placeholder="Enter Password" name="password"  value={inputs.password} onChange={inputEvent} />
+                  
                   <i onClick={Eye} className={`fa ${eye ? "fa-eye-slash" : "fa-eye"}`}></i>
                 </div>
                 <div className="recovery">
@@ -159,6 +164,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   )
 }

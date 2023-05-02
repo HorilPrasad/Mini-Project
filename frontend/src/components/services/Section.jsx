@@ -4,30 +4,24 @@ import Worker from '../card/Worker'
 import {useNavigate} from 'react-router-dom'
 import {useState,useEffect} from 'react'
 import {baseUrl} from '../shared/baseUrl'
-const Section = ({name}) => {
+const Section = ({name,data}) => {
     const navigate = useNavigate();
-    const [data, setdata] = useState(null);
+    const [filterData,setFilterData] = useState(null);
 
-      const getWorkersData = async(name) =>{
+      const getFilterData = async(name) =>{
         const arr = name.split(' ');
         const type = arr[1].toLowerCase();
-        const res = await fetch(baseUrl+'/api/workers/getAllWorkers');
   
-        if(res.status === 200)
-        {
-          const data = await res.json();
           console.log(data)
           const temp = data.filter(x=>{
-            if(x.occupation == 'electrician')
+            if(x.occupation === type)
               return x;
           })
-          console.log(temp)
           setdata(data);
-        }
       }
 
       useEffect(() => {
-        getWorkersData(name);
+        getFilterData(name);
 
       }, []);
 

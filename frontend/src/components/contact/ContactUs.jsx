@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 import phoneImg from '../../img/phone.png'
 import emailImg from '../../img/email_contact.png'
 import { baseUrl } from '../shared/baseUrl';
+import Footer from '../footer/footer';
+import Nav from '../nav/Nav';
 const ContactUs = () => {
     const [inputs, setInputs] = useState({name:'', email:'', phone:'', message:''});
     const navigate = useNavigate();
@@ -46,6 +48,8 @@ const ContactUs = () => {
     }
 
     return (
+        <>
+        <Nav/>
         <div className={style.main_container}>
             <div className={style.left}>
                 <div className={style.left_sub}>
@@ -83,6 +87,8 @@ const ContactUs = () => {
                 </form>
             </div>
         </div>
+        <Footer/>
+        </>
     )
 }
 

@@ -5,8 +5,9 @@ export const AuthAdmin = ({children}) => {
     const {user,loginStatus} = useUser();
     const navigate = useNavigate();
 
-    if(loginStatus && user.userType === 'admin')
-        return children;
+    if(loginStatus && user.userType != 'admin')
+        navigate('/');
+    
+    return children;
 
-    navigate('/');
 }

@@ -4,6 +4,8 @@ import { useEffect, useState} from 'react'
 import Worker from '../card/Worker'
 import style from '../../css/workers.module.css'
 import { baseUrl } from "../shared/baseUrl";
+import Nav from "../nav/Nav";
+import Footer from "../footer/footer";
 
 const Workers = () => {
     const {name} = useParams();
@@ -32,15 +34,21 @@ const Workers = () => {
 
   return (
     <>
+    <Nav/>
     <Divider>{name}</Divider>
     <div className={style.worker_list}>
     {
       data && data.map((item,index) => {
         if(workerType == (item.occupation).toLowerCase())
           return <Worker key={index} data={item}/>
+        
+        if(workerType == 'workers')
+        return <Worker key={index} data={item}/>
+
       })
     }
     </div>
+    <Footer/>
     </>
   )
 }

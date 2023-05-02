@@ -2,10 +2,12 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { MenuItems } from "./MenuItems";
 import img from '../../img/way.png'
 import { Link } from "react-router-dom";
-import '../../css/navbar.css'
+import style from '../../css/navbar.module.css'
 import { Button } from "../button/Button";
 import { useUser } from "../shared/userContext";
-const Navbar = () =>{
+import DehazeIcon from '@mui/icons-material/Dehaze';
+import CloseIcon from '@mui/icons-material/Close';
+const Nav = () =>{
     const [state , setState] = useState({clicked:false});
     const {user , updateUser,loginStatus,login} = useUser();
     const currentUser = localStorage.getItem('user');
@@ -25,28 +27,29 @@ const Navbar = () =>{
     }
     
     return(
-        <nav className="navbar">
-            <h1 className="navbar-logo">Easy<img src={img} className="logo"></img>Way</h1>
-            <div className="menu-icon" onClick={handleClick}>
-                 <i className={state.clicked?'fas fa-times':'fas fa-bars'}></i>
+        <nav className={style.navbar}>
+            <h1 className={style.navbar_logo}>Easy<img src={img} className={style.logo}></img>Way</h1>
+            <div className={style.menu_icon} onClick={handleClick}>
+                 {state.clicked ? <CloseIcon sx={{color:"white"}}/>
+                 :<DehazeIcon sx={{color:"white"}}/>}
             </div>
-            <ul className={state.clicked?'nav-menu active':'nav-menu'}>
+            <ul className={state.clicked?`${style.nav_menu} ${style.active}`:style.nav_menu}>
                 {MenuItems.map((item, index) => {
                     return (
                         <li key={index}>
-                            <Link className={item.cName} to={item.url}>
+                            <Link className={style.nav_links} to={item.url}>
                                 {item.title}
                             </Link>
                         </li>
                     )
                 })}
                 {
-                    loginStatus ? <li><Link className="nav-links-mobile" to='/profile'>{user.name}</Link></li>
-                    :<li><Link className="nav-links-mobile" to='/login'>login</Link></li>
+                    loginStatus ? <li><Link className={style.nav_links_mobile} to='/profile'>{user.name}</Link></li>
+                    :<li><Link className={style.nav_links_mobile} to='/login'>login</Link></li>
                 }
                 {
-                    loginStatus ?<li><Link  to={`/users/profile/${user.id}`}><img className='nav-profile-pic' src={user.imageUrl} alt="pic"/></Link></li> 
-                    :<li><Link className='nav-btn' to="/login"><Button>Login</Button></Link></li>
+                    loginStatus ?<li><Link  to={`/users/profile/${user.id}`}><img className={style.nav_profile_pic} src={user.imageUrl} alt="pic"/></Link></li> 
+                    :<li><Link className={style.nav_btn} to="/login"><Button>Login</Button></Link></li>
                     
                 }
                 
@@ -56,4 +59,4 @@ const Navbar = () =>{
         </nav>
     );
 }
-export default Navbar
+export default Nav

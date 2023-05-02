@@ -5,6 +5,8 @@ import { useUser } from '../shared/userContext'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { baseUrl } from '../shared/baseUrl'
+import Footer from '../footer/footer';
+import Nav from '../nav/Nav';
 const Profile = () => {
     const navigate = useNavigate();
     const { logout } = useUser()
@@ -35,8 +37,10 @@ const Profile = () => {
 
 
 
-    if (userData)
         return (
+            <>
+            <Nav/>
+            {userData &&
             <div className={style.container}>
                 <div className={style.left}>
                     <div className={style.profile_img}>
@@ -156,8 +160,9 @@ const Profile = () => {
                 {(user && user.id === id) && <div className={style.logout}>
                         <Button buttonSize='btn--large' onClick={Logout}>logout</Button>
                     </div>}
-            </div>
-            
+            </div>}
+            <Footer/>
+            </>
         )
 }
 

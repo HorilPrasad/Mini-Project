@@ -19,6 +19,7 @@ export const UserProvider = ({ children }) => {
 
   const logout = () =>{
     setloginStatus(false);
+    setUser(null);
   }
 
   // Return the UserContext provider with the user and updateUser function as value

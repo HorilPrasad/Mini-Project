@@ -11,6 +11,8 @@ import { storage } from "../../firebase/config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { useUser } from "../shared/userContext";
 import { baseUrl } from "../shared/baseUrl";
+import Footer from '../footer/footer';
+import Nav from '../nav/Nav';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -28,7 +30,8 @@ const Register = () => {
 
   const userTypes = [{ value: 'user', label: 'User' }, { value: 'worker', label: 'Worker' }];
   const serviceTypes = [{ value: 'electrician', label: 'Electrician' }, { value: 'carpenter', label: 'Carpenter' },
-  { value: 'cleaner', label: 'Cleaner' }]
+  { value: 'cleaner', label: 'Cleaner' },{ value: 'plumber', label: 'Plumber' },{ value: 'machenic', label: 'Machenic' },
+  { value: 'maid', label: 'Maid' }]
 
   useEffect(() => {
 
@@ -188,6 +191,8 @@ const Register = () => {
     }
   }
   return (
+    <>
+      <Nav/>
     <div className="register-box">
       <Divider>Register</Divider>
       <form onSubmit={UserRegister}>
@@ -264,6 +269,8 @@ const Register = () => {
         </div>
       </form>
     </div>
+    <Footer/>
+    </>
   )
 }
 export default Register

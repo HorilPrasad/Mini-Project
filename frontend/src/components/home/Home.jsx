@@ -7,6 +7,8 @@ import ReviewCard from '../review/ReviewCard';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { baseUrl } from '../shared/baseUrl';
+import Footer from '../footer/footer';
+import Nav from '../nav/Nav';
 const Home = () => {
 
     const [feadback, setfeadback] = useState();
@@ -31,6 +33,7 @@ const Home = () => {
 
     return (
         <>
+            <Nav/>
             <section className="hero">
                 <div className="hero-left">
                     <h1>Service with care, satisfaction guaranteed.</h1>
@@ -97,15 +100,14 @@ const Home = () => {
                 {
                     feadback &&
                     feadback.slice(0, 3).map((item, index) => {
-                        return (
-                            <ReviewCard key={index} data={item} />
-                        )
+                        return <ReviewCard key={index} data={item}/>
                     })
 
 
                 }
 
             </section>
+            <Footer/>
         </>
     );
 };

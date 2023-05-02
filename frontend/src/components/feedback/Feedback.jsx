@@ -4,6 +4,8 @@ import { useState } from "react";
 import img from '../../img/chat_g.png'
 import {toast} from 'react-toastify'
 import { baseUrl } from "../shared/baseUrl";
+import Footer from '../footer/footer';
+import Nav from '../nav/Nav';
 const Feedback = () => {
     const [inputs,setInputs] = useState({name:"",email:"",rating:"",message:""}); 
 
@@ -43,6 +45,8 @@ const Feedback = () => {
 
     }
     return (
+        <>
+        <Nav/>
         <div className={style.container}>
         <div className={style.heading}>
             <h3>Feedback&nbsp;</h3>
@@ -77,6 +81,8 @@ const Feedback = () => {
                 </form>   
         </div>
     </div>
+    <Footer/>
+    </>
     )
 }
 
