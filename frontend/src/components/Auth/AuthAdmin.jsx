@@ -1,13 +1,15 @@
-import React from 'react'
-import { useUser } from '../shared/userContext'
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 export const AuthAdmin = ({children}) => {
-    const {user,loginStatus} = useUser();
     const navigate = useNavigate();
+    const user = localStorage.getItem('user');
+    const currentUser = JSON.parse(user);
 
-    if(loginStatus && user.userType != 'admin')
-        navigate('/');
+    if(!user)
+        return <Navigate to='/'/>
+    if(currentUser.userType != 'admin')
+        return <Navigate to='/'/>
     
     return children;
+    
 
 }

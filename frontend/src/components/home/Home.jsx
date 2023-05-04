@@ -51,7 +51,7 @@ const Home = () => {
             <section className="services">
                 {ServiceList.map((item, index) => {
                     return (
-                        <Link to={`/workers/Top ${item.title}`}><Card key={index} service={item.title} imageUrl={item.imageUrl}></Card></Link>
+                        <Link key={index} to={`/workers/Top ${item.title}`}><Card key={index} service={item.title} imageUrl={item.imageUrl}></Card></Link>
                     )
                 })}
             </section>

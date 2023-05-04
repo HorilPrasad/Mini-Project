@@ -17,7 +17,7 @@ const Section = ({name,data}) => {
             if(x.occupation === type)
               return x;
           })
-          setdata(data);
+          setFilterData(temp)
       }
 
       useEffect(() => {

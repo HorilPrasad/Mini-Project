@@ -32,10 +32,13 @@ const Profile = () => {
     }
 
     useEffect(() => {
+        if(user.userType === 'admin')
+            navigate('/admin')
         getUserProfile();
     }, [id]);
 
 
+    
 
         return (
             <>

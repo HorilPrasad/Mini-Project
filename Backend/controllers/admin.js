@@ -8,17 +8,18 @@ const saltRounds = 10;
 
  const addAdmin = asyncHandler(async(req, res) => {
     
+    
     const salt = bcrypt.genSaltSync(saltRounds);
-    const hashedPassword = await bcrypt.hash(req.password, salt);
-    const user = await AllUsers.create({
-        email:req.email,
-        password:hashedPassword,
-        userType:'admin'
-    });
-    if(user)
-        res.status(200);
-    else
-        res.status(400);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+        const user = await AllUsers.create({
+            email:req.body.email,
+            password:hashedPassword,
+            userType:'admin'
+        });
+        if(user)
+            res.status(200).json({msg:"succes"});
+        else
+            res.status(400).json({msg:"error"});
 
 })
 

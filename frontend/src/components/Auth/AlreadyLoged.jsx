@@ -1,12 +1,10 @@
-import react from 'react'
-import { useNavigate } from 'react-router-dom';
-import { useUser } from '../shared/userContext'
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export const AlreadyLoged = ({children}) => {
-    const navigate = useNavigate();
-    const {loginStatus} = useUser();
-    if(loginStatus)
-        navigate('/');
+    const user = localStorage.getItem('user');
     
-  return children;
+    if(user)
+      return <Navigate to='/'/>  
+      
+    return children;
 }
