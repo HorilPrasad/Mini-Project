@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Worker = require("../models/workerModel");
+const Request = require("../models/Request");
 const AllUsers = require('../models/AllUsers'); 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -12,9 +13,8 @@ const saltRounds = 10;
 
 const workerRegistration = asyncHandler ( async (req, res) => {
 
-
-    const {name, phone, email, password, address, occupation, about, imageUrl} = req.body.Inputs;
-    const serviceList = req.body.list;
+    console.log(req.body)
+    const {name, phone, email, password, address, occupation, about, imageUrl,serviceList } = req.body;
     if(!name || !email || !password || !address){
         res.status(400);
         throw new Error("All fields are mandatory");
@@ -23,7 +23,7 @@ const workerRegistration = asyncHandler ( async (req, res) => {
     const workerAvailable  = await AllUsers.findOne({ email });
     
     if(workerAvailable){
-        res.status(400);
+        res.status(403).json({message:"Already exist!"});
         throw new Error("Worker already registered with this email!");
     }
     const salt = bcrypt.genSaltSync(saltRounds);
@@ -198,7 +198,7 @@ const deleteWorker = asyncHandler( async (req, res) => {
 //@route GET /api/workers/logout
 //@access public
 
-const workerLogout = asyncHandler ( async (re, res) =>{
+const workerLogout = asyncHandler ( async (req, res) =>{
     console.log("logout");
     res.clearCookie("access_token");
     res.status(200).json({ message: "Logout success!"});
@@ -214,6 +214,6 @@ module.exports = {
     workerProfile,
     editWorker, 
     getAllWorkers,
-    deleteWorker
+    deleteWorker,
 }; 
 

@@ -3,7 +3,7 @@ import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutl
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import {Link} from 'react-router-dom'
-const Widget = ({ type }) => {
+const Widget = ({ type, url ,count }) => {
     let data;
 
     const amount  = 100;
@@ -13,6 +13,7 @@ const Widget = ({ type }) => {
             data={
                 title: "USERS",
                 link: "See all users",
+                url:url,
                 icon: (
                     <PersonOutlineIcon className="icon" 
                         style={{
@@ -27,6 +28,7 @@ const Widget = ({ type }) => {
         data={
             title: "WORKERS",
             link: "See all workers",
+            url:url,
             icon: (
                 <EngineeringIcon className="icon"
                     style={{
@@ -44,8 +46,8 @@ const Widget = ({ type }) => {
     <div className="widget">
         <div className="left">
             <span className="title">{data.title}</span>
-            <span className="counter">{ amount }</span>
-            <Link to='/admin/all-workers'><span className="link">{data.link}</span></Link>
+            <span className="counter">{ count }</span>
+            <Link to={data.url}><span className="link">{data.link}</span></Link>
         </div>
         <div className="right">
             <div className="percentage positive">

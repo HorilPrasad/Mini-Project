@@ -35,14 +35,14 @@ const Sidebar = () => {
                 <ul>
                     <li className="title">LIST</li>
                 </ul>
-                <li>
-                <Link to='/admin/all-users'><PersonOutlineIcon className="icon"/>
-                    <span>Users</span></Link>
-                </li>
-                <li>
-                <Link to='/admin/all-workers'><PersonOutlineIcon className="icon"/>
-                    <span>Workers</span></Link>
-                </li>
+                <Link to='/admin/all-users'><li>
+                <PersonOutlineIcon className="icon"/>
+                    <span>Users</span>
+                </li></Link>
+                <Link to='/admin/all-workers'><li>
+                <PersonOutlineIcon className="icon"/>
+                    <span>Workers</span>
+                </li></Link>
                 <ul>
                     <li className="title">USEFUL</li>
                 </ul>
@@ -64,10 +64,6 @@ const Sidebar = () => {
                 <ul>
                     <li className="title">USER</li>
                 </ul>
-                <li>
-                    <AccountCircleRoundedIcon className="icon"/>
-                    <span>Profile</span>
-                </li>
                 <li>
                     <ExitToAppRoundedIcon className="icon"/>
                     <span onClick={handleLogout}>Logout</span>

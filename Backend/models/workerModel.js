@@ -28,7 +28,6 @@ const workerSchema = mongoose.Schema({
 
     occupation: {
         type: String,
-        required: [true, "Occupation is mandatory"],
     },
 
     serviceList: [{
@@ -36,15 +35,13 @@ const workerSchema = mongoose.Schema({
     }],
 
     description:{
-        type: String,
-        required: [true, "Please provide a description about services"]
+        type: String
     },
 
     imageUrl : {
         type : String
-    }
-
+    },
 });
 
-module.exports = mongoose.model("workers", workerSchema);
+module.exports = mongoose.model("worker", workerSchema);
 

@@ -4,6 +4,7 @@ import Navbar from '../admin_navbar/Navbar';
 import { baseUrl } from "../shared/baseUrl";
 import { useEffect, useState } from "react";
 import { LinearProgress } from "@mui/material";
+import {Divider} from '../divider/Divider'
 
 const Users = () => {
 
@@ -27,6 +28,7 @@ const Users = () => {
     <Sidebar />
     <div className="homeContainer">
         <Navbar/>
+        <Divider>USERS</Divider>
         <div className={style.table_cont}>
         <table border="0">
             <thead className={style.tabHead}>

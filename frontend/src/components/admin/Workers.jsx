@@ -4,6 +4,7 @@ import Navbar from '../admin_navbar/Navbar';
 import { baseUrl } from "../shared/baseUrl";
 import { useEffect, useState } from "react";
 import { LinearProgress } from "@mui/material";
+import {Divider} from '../divider/Divider'
 const Workers = () => {
     const [data, setdata] = useState();
 
@@ -25,6 +26,7 @@ const Workers = () => {
     <Sidebar />
     <div className="homeContainer">
         <Navbar/>
+        <Divider>WORKERS</Divider>
         <div className={style.table_cont}>
         <table >
             <thead className={style.tabHead}>

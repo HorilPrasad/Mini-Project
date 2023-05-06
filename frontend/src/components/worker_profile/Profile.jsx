@@ -7,11 +7,13 @@ import { toast } from 'react-toastify'
 import { baseUrl } from '../shared/baseUrl'
 import Footer from '../footer/footer';
 import Nav from '../nav/Nav';
+import { LinearProgress } from '@mui/material'
 const Profile = () => {
     const navigate = useNavigate();
     const { logout } = useUser()
     const { id } = useParams();
     const [userData, setUserData] = useState();
+    const [requestData, setRequestData] = useState();
     const { user } = useUser();
 
 
@@ -30,11 +32,39 @@ const Profile = () => {
         setUserData(data);
         
     }
+    const getRequests = async () => {
+        const res = await fetch(baseUrl + '/api/workers/request/' + id);
+        const data = await res.json();
+        setRequestData(data);
+    }
+    const handleRequest = async() => {
+        const toWorkerId = id;
+        const fromUserId = user.id;
+        const res = await fetch(baseUrl + '/api/workers/request',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({toWorkerId,fromUserId})
+        })
+
+        const data = await res.json();
+        if(res.status === 200)
+        {
+            toast.success(data.message,{theme:'colored'})
+            getRequests();
+        }else if(res.status === 409){
+            toast.error(data.message,{theme:'colored'});
+        }else{
+            toast.error("Error",{theme:'colored'})
+        }
+    }
 
     useEffect(() => {
         if(user.userType === 'admin')
             navigate('/admin')
         getUserProfile();
+        getRequests();
     }, [id]);
 
 
@@ -60,7 +90,9 @@ const Profile = () => {
                         }
                         </ul>
                     </div>
-                    
+                    {(user && user.id === id) && <div className={style.logout}>
+                        <Button buttonSize='btn--large' onClick={Logout}>logout</Button>
+                    </div>}
                 </div>
                 <div className={style.right}>
                     <div className={style.name}>
@@ -75,10 +107,10 @@ const Profile = () => {
                             <span>★</span>
                         </div>
                     </div>
-                    <div className={style.contact_btn}>
+                    {(user && user.id !=id) && <div className={style.contact_btn}>
                         <Button buttonStyle='btn--outline' onClick={() => openInNewTab(`https://wa.me/+91${userData.phone}`)}>Message</Button>
-                        <Button buttonStyle='btn--outline'>Contact</Button>
-                    </div>
+                        <Button buttonStyle='btn--outline' onClick={handleRequest}>Request</Button>
+                    </div>}
                     <h4>About</h4>
                     <hr />
                     <div className={style.about}>
@@ -102,67 +134,36 @@ const Profile = () => {
                 </div>
                
                 <div className={style.working_list}>
-                        <h2>Request List</h2>
-                        <div className={style.working_list_item}>
-                            <h3>1</h3>
-                            <h3>Horil Prasad</h3>
-                            <h3>Prayagraj</h3>
-                            <h3>Plumber</h3>
-                            <h3>01/05/2023</h3>
-                            <h3 className={style.pending}>Pending</h3>
-                        </div>
-                        <div className={style.working_list_item}>
-                            <h3>1</h3>
-                            <h3>Horil Prasad</h3>
-                            <h3>Prayagraj</h3>
-                            <h3>Plumber</h3>
-                            <h3>01/05/2023</h3>
-                            <h3 className={style.pending}>Pending</h3>
-                        </div>
-                        <div className={style.working_list_item}>
-                            <h3>1</h3>
-                            <h3>Horil Prasad</h3>
-                            <h3>Prayagraj</h3>
-                            <h3>Plumber</h3>
-                            <h3>01/05/2023</h3>
-                            <h3 className={style.pending}>Pending</h3>
-                        </div>
-                        <div className={style.working_list_item}>
-                            <h3>1</h3>
-                            <h3>Horil Prasad</h3>
-                            <h3>Prayagraj</h3>
-                            <h3>Plumber</h3>
-                            <h3>01/05/2023</h3>
-                            <h3 className={style.pending}>Pending</h3>
-                        </div>
-                        <div className={style.working_list_item}>
-                            <h3>1</h3>
-                            <h3>Horil Prasad</h3>
-                            <h3>Prayagraj</h3>
-                            <h3>Plumber</h3>
-                            <h3>01/05/2023</h3>
-                            <h3 className={style.complete}>Done</h3>
-                        </div>
-                        <div className={style.working_list_item}>
-                            <h3>1</h3>
-                            <h3>Horil Prasad</h3>
-                            <h3>Prayagraj</h3>
-                            <h3>Plumber</h3>
-                            <h3>01/05/2023</h3>
-                            <h3 className={style.complete}>Done</h3>
-                        </div>
-                        <div className={style.working_list_item}>
-                            <h3>1</h3>
-                            <h3>Horil Prasad</h3>
-                            <h3>Prayagraj</h3>
-                            <h3>Plumber</h3>
-                            <h3>01/05/2023</h3>
-                            <h3 className={style.pending}>Pending</h3>
-                        </div>
+                    <h2>Request List</h2>
+                        
+                    <table border="0">
+                    <thead className={style.tabHead}>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody className={style.tabBody}>
+                    {requestData ? requestData.map((item, index)=> {
+                            return (
+                                <tr key={index}>
+                                    <td>{item.from.name}</td>
+                                    <td>{item.from.phone}</td>
+                                    <td>{item.from.address}, Uttar Pradesh</td>
+                                    <td>{new Date(item.createdAt).toISOString().split('T')[0]}</td>
+                                    <td><span className={item.status=='Pending'?style.pending:item.status == 'Accepted'?style.accepted:style.rejected}>{item.status}</span></td>
+                                </tr>
+                            )
+                        }):<tr><td colSpan='6'><LinearProgress/></td></tr>
+                        }
+                    </tbody>
+                </table>
+                        
                 </div>
-                {(user && user.id === id) && <div className={style.logout}>
-                        <Button buttonSize='btn--large' onClick={Logout}>logout</Button>
-                    </div>}
+                
             </div>}
             <Footer/>
             </>

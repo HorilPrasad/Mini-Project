@@ -23,4 +23,15 @@ const saltRounds = 10;
 
 })
 
-module.exports = {addAdmin}
+const userCount = asyncHandler(async(req, res) =>{
+    const user = await User.countDocuments({});
+
+    const worker = await Worker.countDocuments({});
+
+    if(user && worker)
+        res.status(200).json({user:user,worker:worker});
+    else
+    res.status(400).json({message:"error"})
+})
+
+module.exports = {addAdmin, userCount}

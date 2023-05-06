@@ -165,14 +165,14 @@ const Register = () => {
         toast.error('Database not responding!', { theme: 'colored' })
       }
     } else {
-      const list = serviceList.map(a => a.value);
+      const list = {serviceList:serviceList.map(a => a.value)};
 
       const res = await fetch(baseUrl+'/api/workers/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ Inputs, list })
+        body: JSON.stringify({ ...Inputs, ...list })
       });
 
       if (res.status === 201) {
