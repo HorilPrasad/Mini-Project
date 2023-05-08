@@ -133,3 +133,28 @@ td{
 .tabBody td{
     font-size: 1.1rem;
 }
+
+@media screen and (max-width:650px){
+    .container{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 1rem;
+        justify-content: center;
+    }
+    .left{
+        padding: 1rem;
+        overflow: hidden;
+    }
+    .about{
+        overflow: hidden;
+    }
+    .working_list{
+        width:100%;
+        padding: 1rem;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        overflow: auto;
+    }
+}

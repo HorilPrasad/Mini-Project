@@ -71,27 +71,25 @@ const Register = () => {
     if (Inputs.email === "" || Inputs.password === "" || Inputs.phone === "" || image === null)
       toast.warn("All field mandatory!", { theme: "colored" });
     else {
-      setOtpSend(true)
-      setVerify(true)
       setbuttonLoading(true)
-      await uploadImage();
+      const email = Inputs.email;
+      const res = await fetch(baseUrl + "/api/verification/sendMail",{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({email})
+      });
+      if(res.status === 200)
+      { 
+        setOtpSend(true);
+        toast.success("OTP send!");
+        await uploadImage();
+      }
+      else
+        toast.error("Server Error!");
+      
       setbuttonLoading(false)
-      // const email = Inputs.email;
-      // const res = await fetch(baseUrl + "/api/verification/sendMail",{
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify({email})
-      // });
-      // if(res.status === 200)
-      // { 
-      //   setOtpSend(true);
-      //   toast.success("OTP send!");
-      //   await uploadImage();
-      // }
-      // else
-      //   toast.error("Server Error!");
     }
 
   }

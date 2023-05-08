@@ -44,7 +44,7 @@ const Nav = () =>{
                     )
                 })}
                 {
-                    loginStatus ? <li><Link className={style.nav_links_mobile} to='/profile'>{user.name}</Link></li>
+                    loginStatus ? <li><Link className={style.nav_links_mobile} to={`/users/profile/${user.id}`}>{user.name}</Link></li>
                     :<li><Link className={style.nav_links_mobile} to='/login'>login</Link></li>
                 }
                 {
