@@ -1,6 +1,9 @@
 .register-box {
-    background-color: #e1f8f8;
+    background-color: #ebe9e9;
     min-height: 80vh;
+    margin: 1rem;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px #575555;
 }
 
 .register-form {
