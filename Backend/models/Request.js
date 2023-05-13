@@ -25,13 +25,14 @@ const Request = new mongoose.Schema({
   
   Request.pre('save', async function(next) {
     if (this.isModified('status') && this.status === 'Accepted') {
-      const existingRequest = await this.constructor.findOne({ from: this.from, to:this.to, status: 'Accepted' });
-      if (existingRequest) {
+      const existingRequest = await this.constructor.findOne({ from: this.from, to:this.to, status: 'Pending' });
+      if (!existingRequest) {
         const err = new Error('User has already accepted a request');
         err.name = 'DuplicateRequestError';
         next(err);
         return;
       }
+
     } else if (this.isNew) {
       const existingRequest = await this.constructor.findOne({ from: this.from, to:this.to, status: 'Pending' });
       if (existingRequest) {

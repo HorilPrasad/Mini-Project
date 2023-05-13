@@ -8,6 +8,9 @@ import { baseUrl } from '../shared/baseUrl'
 import Footer from '../footer/footer';
 import Nav from '../nav/Nav';
 import { LinearProgress } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close';
+
+
 const Profile = () => {
     const navigate = useNavigate();
     const { logout } = useUser()
@@ -15,7 +18,46 @@ const Profile = () => {
     const [userData, setUserData] = useState();
     const [requestData, setRequestData] = useState();
     const { user } = useUser();
+    const [isOpen, setIsOpen] = useState(false);
+    const [requestHandleId, setRequestHandleId] = useState();
 
+    const handleAccept = async() => {
+        setIsOpen(false);
+        const res = await fetch(baseUrl + '/api/workers/requests/'+requestHandleId+'/accept',{
+            method:'PUT',
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        if(res.status === 200)
+        {
+            toast.success("Accepted",{theme:'colored'})
+            getWorkerRequests();
+        } 
+      };
+    
+      const handleReject = async() => {
+        setIsOpen(false);
+        const res = await fetch(baseUrl + '/api/workers/requests/'+requestHandleId+'/reject',{
+            method:'PUT',
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        if(res.status === 200)
+        {
+            toast.error("Rejected",{theme:'colored'})
+            getWorkerRequests();
+        }    
+      };
+
+      const handleClose = () => {
+        setIsOpen(false);
+      };
+      const handlePopup = (_id) =>{
+        setIsOpen(true);
+        setRequestHandleId(_id)
+      }
 
     const Logout = () => {
         localStorage.clear();
@@ -32,7 +74,12 @@ const Profile = () => {
         setUserData(data);
         
     }
-    const getRequests = async () => {
+    const getUserRequests = async () => {
+        const res = await fetch(baseUrl + '/api/users/request/' + id);
+        const data = await res.json();
+        setRequestData(data);
+    }
+    const getWorkerRequests = async () => {
         const res = await fetch(baseUrl + '/api/workers/request/' + id);
         const data = await res.json();
         setRequestData(data);
@@ -52,7 +99,7 @@ const Profile = () => {
         if(res.status === 200)
         {
             toast.success(data.message,{theme:'colored'})
-            getRequests();
+            getWorkerRequests();
         }else if(res.status === 409){
             toast.error(data.message,{theme:'colored'});
         }else{
@@ -64,7 +111,10 @@ const Profile = () => {
         if(user.userType === 'admin')
             navigate('/admin')
         getUserProfile();
-        getRequests();
+        if(user.userType === 'user')
+            getUserRequests();
+
+        getWorkerRequests();
     }, [id]);
 
 
@@ -149,12 +199,20 @@ const Profile = () => {
                     <tbody className={style.tabBody}>
                     {requestData ? requestData.map((item, index)=> {
                             return (
-                                <tr key={index}>
+                                user && user.id === id && user.userType === 'user' 
+                                ?<tr key={index}>
+                                    <td>{item.to.name}</td>
+                                    <td>{item.to.phone}</td>
+                                    <td>{item.to.address}, Uttar Pradesh</td>
+                                    <td>{new Date(item.createdAt).toISOString().split('T')[0]}</td>
+                                    <td><span className={item.status=='Pending'?style.pending:item.status == 'Accepted'?style.accepted:style.rejected}>{item.status}</span></td>
+                                </tr>
+                                : <tr key={index}>
                                     <td>{item.from.name}</td>
                                     <td>{item.from.phone}</td>
                                     <td>{item.from.address}, Uttar Pradesh</td>
                                     <td>{new Date(item.createdAt).toISOString().split('T')[0]}</td>
-                                    <td><span className={item.status=='Pending'?style.pending:item.status == 'Accepted'?style.accepted:style.rejected}>{item.status}</span></td>
+                                    <td><span onClick={item.status =='Pending'?()=>handlePopup(item._id):handleClose} className={item.status=='Pending'?style.pending:item.status == 'Accepted'?style.accepted:style.rejected}>{item.status}</span></td>
                                 </tr>
                             )
                         }):<tr><td colSpan='6'><LinearProgress/></td></tr>
@@ -166,6 +224,16 @@ const Profile = () => {
                 
             </div>}
             <Footer/>
+            {(isOpen && user.id === id && user &&  user.userType === 'worker') && (
+                <div className={style.dialog}>
+                <div className={style.closeDialog}  onClick={handleClose}><CloseIcon/></div>
+                <div className={style.acceptButton}>
+                <h2>Do you want to accept or reject?</h2>
+                <button className={style.success} onClick={handleAccept}>Accept</button>
+                <button className={style.danger} onClick={handleReject}>Reject</button>
+                </div>
+                </div>
+            )}
             </>
         )
 }

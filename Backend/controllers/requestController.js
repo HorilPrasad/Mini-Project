@@ -24,12 +24,42 @@ const addRequest = asyncHandler (async (req,res)=>{
     }
 })
 
-const requests = asyncHandler ( async(req,res) =>{
+const workerRequests = asyncHandler ( async(req,res) =>{
     const {id} = req.params;
-    const requests = await Request.find({ to: id }).populate('from');
+    const requests = await Request.find({ to: id }).sort({ createdAt: -1 }).populate('from');
     
     res.status(200).json(requests);
    
 })
+const userRequests = asyncHandler ( async(req,res) =>{
+    const {id} = req.params;
+    const requests = await Request.find({ from: id }).sort({ createdAt: -1 }).populate('to');
+    res.status(200).json(requests);
+})
 
-module.exports = {addRequest,requests};
+const accept = async(req, res) => {
+    const request = await Request.findById(req.params.id);
+    if (!request) {
+      return res.status(404).json({ message: 'Request not found' });
+    }
+    if (request.status !== 'Pending') {
+      return res.status(400).json({ message: 'Cannot accept request that is not pending' });
+    }
+    request.status = 'Accepted';
+    await request.save();
+    res.json(request);
+}
+
+const reject = async(req, res) => {
+    const request = await Request.findById(req.params.id);
+    if (!request) {
+      return res.status(404).json({ message: 'Request not found' });
+    }
+    if (request.status !== 'Pending') {
+      return res.status(400).json({ message: 'Cannot reject request that is not pending' });
+    }
+    request.status = 'Rejected';
+    await request.save();
+    res.json(request);
+}
+module.exports = {addRequest,workerRequests,accept,reject,userRequests};

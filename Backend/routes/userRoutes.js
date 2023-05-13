@@ -11,6 +11,8 @@ const {
     deleteUser,
 } = require("../controllers/userController");
 
+const {userRequests} = require('../controllers/requestController');
+
 const router = express.Router();
 router.use(cookieParser());
 router.route("/register").post(userRegistration);
@@ -20,6 +22,7 @@ router.route("/editUser").put(authentication, editUser);
 router.route("/getAllUsers").get(getAllUsers);
 router.route("/deleteUser").delete(authentication, deleteUser);
 router.route("/logout").post(userLogout);
+router.route("/request/:id").get(userRequests);
 // find single users
 // edit profile
 // find all users

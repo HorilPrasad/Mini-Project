@@ -231,13 +231,12 @@ const Register = () => {
             <Input type="text" name="occupation" value={Inputs.occupation} onChange={inputEvent} />
           </div>
           <div className={`${worker ? "input-text" : "hide"}`}>
-            <p>Services Provide <span>*</span></p>
+            <p>Service Provide <span>*</span></p>
             <Select
-              isMulti
               name="services"
               options={serviceTypes}
               classNamePrefix="select"
-              className="basic-multi-select"
+              className="basic-select"
               onChange={setServiceList}
             />
           </div>
