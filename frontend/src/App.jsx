@@ -17,6 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Dashboard from "./components/admin/Home";
 import AdminUsers from "./components/admin/Users";
 import AdminWorkers from "./components/admin/Workers";
+import AdminRequests from "./components/admin/Requests";
 
 
 const App = () =>{
@@ -38,6 +39,7 @@ const App = () =>{
           <Route index element={<AuthAdmin><Dashboard/></AuthAdmin>} />
           <Route path="all-users" element={<AuthAdmin><AdminUsers/></AuthAdmin>}/>
           <Route path="all-workers" element={<AuthAdmin><AdminWorkers/></AuthAdmin>}/>
+          <Route path="all-requests" element={<AuthAdmin><AdminRequests/></AuthAdmin>}/>
         </Route>
         <Route path="*" element={<p>404 page not found!</p>}/>
       </Routes>

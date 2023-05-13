@@ -46,10 +46,10 @@ const Sidebar = () => {
                 <ul>
                     <li className="title">USEFUL</li>
                 </ul>
-                <li>
+                <Link to='/admin/all-requests'><li>
                     <QueryStatsRoundedIcon className="icon"/>
-                    <span>Stats</span>
-                </li>
+                    <span>Requests</span>
+                </li></Link>
                 <ul>
                     <li className="title">SERVICE</li>
                 </ul>

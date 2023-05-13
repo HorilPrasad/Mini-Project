@@ -1,4 +1,5 @@
 const Worker = require("../models/workerModel");
+const User = require("../models/userModel")
 const Request = require("../models/Request");
 const AllUsers = require('../models/AllUsers'); 
 const asyncHandler = require("express-async-handler");
@@ -23,6 +24,13 @@ const addRequest = asyncHandler (async (req,res)=>{
         console.log(error)
     }
 })
+
+const requests = async(req, res) =>{
+  const requests = await Request.find()
+      .populate('from')
+      .populate('to');
+    res.json(requests);
+}
 
 const workerRequests = asyncHandler ( async(req,res) =>{
     const {id} = req.params;
@@ -62,4 +70,4 @@ const reject = async(req, res) => {
     await request.save();
     res.json(request);
 }
-module.exports = {addRequest,workerRequests,accept,reject,userRequests};
+module.exports = {addRequest,workerRequests,accept,reject,userRequests, requests};
