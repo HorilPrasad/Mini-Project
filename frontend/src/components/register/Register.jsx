@@ -30,7 +30,7 @@ const Register = () => {
 
   const userTypes = [{ value: 'user', label: 'User' }, { value: 'worker', label: 'Worker' }];
   const serviceTypes = [{ value: 'electrician', label: 'Electrician' }, { value: 'carpenter', label: 'Carpenter' },
-  { value: 'cleaner', label: 'Cleaner' }, { value: 'plumber', label: 'Plumber' }, { value: 'machenic', label: 'Machenic' },
+  { value: 'cleaner', label: 'Cleaner' }, { value: 'plumber', label: 'Plumber' }, { value: 'mechanic', label: 'Mechanic' },
   { value: 'maid', label: 'Maid' }]
 
   useEffect(() => {

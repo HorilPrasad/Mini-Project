@@ -82,7 +82,7 @@ const Services = () => {
                 <Section name="Top Plumber" data={data}/>
                 <Section name="Top Cleaner" data={data}/>
                 <Section name="Top Carpenter" data={data}/>
-                <Section name="Top Machenic" data={data}/>
+                <Section name="Top Mechanic" data={data}/>
             </>
             }
         </div>

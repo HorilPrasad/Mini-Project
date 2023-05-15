@@ -36,8 +36,8 @@ const Home = () => {
             <Nav/>
             <section className="hero">
                 <div className="hero-left">
-                    <h1>Service with care, satisfaction guaranteed.</h1>
-                    <p>We are a certified company. We Provide the best services like <strong>carpenter, cleaning, electrician, plumber</strong> and more.</p>
+                    <h1>Discover skilled workers for your needs!</h1>
+                    <p>We provides the efficient services for users and hassle free work for workers.</p>
                     <Button buttonSize="btn--large" onClick={goWorkerPage}>Explore</Button>
                 </div>
                 <div className="hero-right">
