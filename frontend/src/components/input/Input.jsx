@@ -6,7 +6,8 @@ export const Input = ({
     value,
     onChange,
     maxLength,
-    minLength
+    minLength,
+    focus
 }) =>{
-    return <input className="input-box" type={type} maxLength={maxLength} minLength={minLength} placeholder={placeholder} name={name}value={value} onChange={onChange}/>
+    return <input className="input-box" type={type} maxLength={maxLength} onFocus={focus} minLength={minLength} placeholder={placeholder} name={name}value={value} onChange={onChange}/>
 }

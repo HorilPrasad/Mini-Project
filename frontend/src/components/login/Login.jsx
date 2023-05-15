@@ -45,24 +45,31 @@ const Login = () => {
     });
   };
 
+  const validateForm= ()=> {
+  
+    // Empty field validation
+    if (inputs.email === "" || inputs.password === "") {
+      toast.error("Please fill in all the required fields.");
+      return false;
+    }
+    // Regular expressions for validation
+    var emailRegex = /^\S+@\S+\.\S+/;
+  
+    // Email validation
+    if (!inputs.email.match(emailRegex)) {
+      toast.error("Please enter a valid email address.");
+      return false;
+    }
+  
+    // All fields are valid
+    return true;
+  }
+  
   const submitForm = async (e) => {
     e.preventDefault();
     setwarnemail(false);
     setwarnpass(false);
-
-    if (inputs.email.length < 1)
-    { 
-      setdanger(false); 
-      toast.warn("Enter valid email!")
-    } 
-    if (inputs.email === "") 
-    { 
-      setwarnemail(true); 
-      toast.warn("Enter valid email!")
-    }else if (inputs.password === "") 
-    { 
-      setwarnpass(true); 
-    }else 
+    if(validateForm())
     { 
       
       const res = await fetch(baseUrl+"/api/login",{
