@@ -117,6 +117,7 @@ const Register = () => {
       if (res.status === 200) {
         setOtpSend(true);
         toast.success("OTP send!");
+        setbuttonLoading(false)
         await uploadImage();
       }
       else
@@ -146,6 +147,7 @@ const Register = () => {
   }
 
   const verifyOtp = async () => {
+    setbuttonLoading(false)
     if (otp === '')
       toast("Enter Otp")
     else {
